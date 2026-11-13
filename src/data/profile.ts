@@ -1,41 +1,3 @@
-export interface ProjectItem {
-  id: string;
-  title: string;
-  subtitle: string;
-  year: string;
-  role: string;
-  category: string;
-  summary: string;
-  description: string;
-  highlights: string[];
-  stack: string[];
-  banner?: string;
-  gallery?: string[];
-  links: {
-    demo?: string;
-    channel?: string;
-    github?: string;
-  };
-}
-
-export interface QuarkNodeItem {
-  id: string;
-  title: string;
-  subtitle: string;
-  badge: string;
-  ctaLabel: string;
-  image: string;
-  href: string;
-}
-
-export interface QuarkModuleItem {
-  id: string;
-  title: string;
-  subtitle: string;
-  image: string;
-  href: string;
-}
-
 export interface TrackItem {
   id: string;
   title: string;
@@ -48,17 +10,43 @@ export interface TrackItem {
   cover?: string;
 }
 
+export interface TelegramLinkItem {
+  id: string;
+  handle: string;
+  note: string;
+  href: string;
+}
+
 export const PROFILE = {
   name: 'сн легендс',
   handle: '@sn_legends',
-  location: 'Telegram, 2026',
-  availability: '@sn_legends',
   heroTitle: 'сн легендс',
-  heroSubtitle: 'Создатель экосистемы QUARK в Telegram',
+  heroSubtitle: 'Создатель QUARK в Telegram',
   telegram: 'https://t.me/sn_legends',
   quarkBot: 'https://t.me/quarkgiftbot',
   quarkChannel: 'https://t.me/quarkgift',
 };
+
+export const TELEGRAM_LINKS: TelegramLinkItem[] = [
+  {
+    id: 'tg-bot',
+    handle: '@quarkgiftbot',
+    note: 'Бот и мини-апп',
+    href: 'https://t.me/quarkgiftbot',
+  },
+  {
+    id: 'tg-channel',
+    handle: '@quarkgift',
+    note: 'Канал',
+    href: 'https://t.me/quarkgift',
+  },
+  {
+    id: 'tg-personal',
+    handle: '@sn_legends',
+    note: 'Личный Telegram',
+    href: 'https://t.me/sn_legends',
+  },
+];
 
 export const FEATURED_TRACK: TrackItem = {
   id: 'madk1d-8-milya',
@@ -71,88 +59,3 @@ export const FEATURED_TRACK: TrackItem = {
   durationSeconds: 114,
   cover: './assets/music/8-milya-cover.jpg',
 };
-
-export const QUARK_MODULES: QuarkModuleItem[] = [
-  {
-    id: 'module-menu',
-    title: 'Меню',
-    subtitle: 'Быстрый выбор игровых режимов, раунды на подарки и актуальные пулы.',
-    image: './assets/quark/quark-menu.jpg',
-    href: 'https://t.me/quarkgiftbot',
-  },
-  {
-    id: 'module-profile',
-    title: 'Профиль',
-    subtitle: 'Инвентарь Telegram Gifts, баланс, история раундов и реферальные бонусы.',
-    image: './assets/quark/quark-profile.jpg',
-    href: 'https://t.me/quarkgiftbot',
-  },
-  {
-    id: 'module-help',
-    title: 'Поддержка',
-    subtitle: 'Прямая связь с командой QUARK и помощь по депозитам и выводу 24/7.',
-    image: './assets/quark/quark-help.jpg',
-    href: 'https://t.me/quarkgiftbot',
-  },
-];
-
-export const QUARK_NODES: QuarkNodeItem[] = [
-  {
-    id: 'quark-bot',
-    title: '@quarkgiftbot',
-    subtitle: 'Бот для депозитов, вывода Telegram Gifts и быстрого входа в QuarkApp.',
-    badge: 'Telegram Bot',
-    ctaLabel: 'Запустить бота',
-    image: './assets/quark/quark-bot.jpg',
-    href: 'https://t.me/quarkgiftbot',
-  },
-  {
-    id: 'quark-channel',
-    title: '@quarkgift',
-    subtitle: 'Основной канал с релизами, раздачами подарков и новостями платформы.',
-    badge: 'Telegram Channel',
-    ctaLabel: 'Открыть канал',
-    image: './assets/quark/quark-channel.jpg',
-    href: 'https://t.me/quarkgift',
-  },
-  {
-    id: 'quark-support',
-    title: 'Support',
-    subtitle: 'Прямая поддержка игроков и помощь по любым операциям с подарками.',
-    badge: 'Support 24/7',
-    ctaLabel: 'Написать в саппорт',
-    image: './assets/quark/quark-support.jpg',
-    href: 'https://t.me/quarkgiftbot',
-  },
-];
-
-export const PROJECTS: ProjectItem[] = [
-  {
-    id: 'quark-gift-bot',
-    title: 'QUARK',
-    subtitle: 'Игровая экосистема и обмен подарков внутри Telegram',
-    year: '2026',
-    role: 'Создатель',
-    category: 'Telegram Mini App',
-    summary:
-      'Игровой мини-апп QuarkApp, бот @quarkgiftbot и канал @quarkgift. Быстрые раунды, депозиты и вывод подарков без задержек внутри Telegram.',
-    description:
-      'QUARK связывает игровой мини-апп QuarkApp внутри Telegram WebView, бота @quarkgiftbot для баланса и подарков, а также канал @quarkgift с обновлениями.',
-    highlights: [
-      'QuarkApp: игровой мини-апп внутри Telegram с мгновенным расчётом',
-      '@quarkgiftbot: депозиты, выводы, профиль и операции с подарками',
-      '@quarkgift: обновления, анонсы и комьюнити проекта',
-    ],
-    stack: ['QuarkApp', '@quarkgiftbot', '@quarkgift'],
-    banner: './assets/quark/quark-welcome.jpg',
-    gallery: [
-      './assets/quark/quark-bot.jpg',
-      './assets/quark/quark-channel.jpg',
-      './assets/quark/quark-support.jpg',
-    ],
-    links: {
-      demo: 'https://t.me/quarkgiftbot',
-      channel: 'https://t.me/quarkgift',
-    },
-  },
-];

@@ -685,7 +685,7 @@ export default function GlassFolder({
   }
 
   const menuItems: FolderMenuItem[] = [
-    { label: open ? "Close folder" : "Open folder", onSelect: () => setOpen(!open) },
+    { label: open ? "Закрыть папку" : "Открыть папку", onSelect: () => setOpen(!open) },
     ...menu,
   ]
 
@@ -760,7 +760,7 @@ export default function GlassFolder({
               type="button"
               className="gf-hit"
               aria-expanded={open}
-              aria-label={(open ? "Close " : "Open ") + label + ", " + count + (count === 1 ? " item" : " items")}
+              aria-label={(open ? "Закрыть " : "Открыть ") + label}
               onClick={() => {
                 setMenuOpen(false)
                 setOpen(!open)
@@ -826,7 +826,13 @@ export default function GlassFolder({
               return (
                 <div key={id} role="listitem" className="gf-sheet-slot">
                   {file.href ? (
-                    <a {...common} href={file.href} onClick={() => onFileSelect?.(file, start + v)}>
+                    <a
+                      {...common}
+                      href={file.href}
+                      target={file.href.startsWith("http") ? "_blank" : undefined}
+                      rel={file.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                      onClick={() => onFileSelect?.(file, start + v)}
+                    >
                       {inner}
                     </a>
                   ) : (
