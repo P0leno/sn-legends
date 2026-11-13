@@ -138,7 +138,7 @@ export function MusicPlayer({ embedded = false }: { embedded?: boolean }) {
 
   const widget = (
     <motion.div
-      className={`music-widget ${isDragging ? 'is-dragging' : ''}`}
+      className={`music-widget ${isDragging ? 'is-dragging' : ''} ${isPlaying ? 'is-playing' : ''}`}
       initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 12 }}
       animate={embedded ? { opacity: 1, y: 0 } : undefined}
       whileInView={embedded ? undefined : { opacity: 1, y: 0 }}

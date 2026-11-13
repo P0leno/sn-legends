@@ -109,6 +109,72 @@ export function SFArrowUpRightIcon({ size = 15, className, ...props }: IconProps
   );
 }
 
+export function SFArrowDownIcon({ size = 15, className, ...props }: IconProps) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      className={className}
+      aria-hidden="true"
+      {...props}
+    >
+      <path
+        d="M12 5.5v12.2M6.8 12.8 12 18l5.2-5.2"
+        stroke="currentColor"
+        strokeWidth="2.1"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+export function SFChevronLeftIcon({ size = 16, className, ...props }: IconProps) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      className={className}
+      aria-hidden="true"
+      {...props}
+    >
+      <path
+        d="m14.8 6.4-5.6 5.6 5.6 5.6"
+        stroke="currentColor"
+        strokeWidth="2.1"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+export function SFChevronRightIcon({ size = 16, className, ...props }: IconProps) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      className={className}
+      aria-hidden="true"
+      {...props}
+    >
+      <path
+        d="m9.2 6.4 5.6 5.6-5.6 5.6"
+        stroke="currentColor"
+        strokeWidth="2.1"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 export function SFPaperplaneIcon({ size = 16, className, ...props }: IconProps) {
   return (
     <svg

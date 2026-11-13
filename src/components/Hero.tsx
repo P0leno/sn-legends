@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   motion,
   useMotionValue,
@@ -7,7 +7,10 @@ import {
   useTransform,
   type MotionValue,
 } from 'motion/react';
+import { SFArrowDownIcon, SFArrowUpRightIcon } from '@/components/ui/sf-icons';
+import { ForestSpores } from './ForestSpores';
 import { MusicPlayer } from './MusicPlayer';
+import { QuarkLogo } from './QuarkLogo';
 import { PROFILE } from '../data/profile';
 import './Hero.css';
 
@@ -24,6 +27,7 @@ interface GiftNode {
   floatDelay: number;
   depth: number;
   rotate: number;
+  opacity?: number;
   mobileVisible?: boolean;
 }
 
@@ -32,30 +36,32 @@ const FLOATING_GIFTS: GiftNode[] = [
     id: 'plush-pepe',
     name: 'Plush Pepe',
     src: 'https://cdn.changes.tg/gifts/models/Plush%20Pepe/png/Original.png',
-    desktopPos: { top: '11%', left: '11%' },
-    mobilePos: { top: '10%', left: '6%' },
-    size: 132,
-    mobileSize: 64,
+    desktopPos: { top: '12%', left: '9%' },
+    mobilePos: { top: '14%', left: '3%' },
+    size: 134,
+    mobileSize: 56,
     floatVariant: 'a',
     floatDuration: 6.2,
     floatDelay: 0,
-    depth: 24,
+    depth: 26,
     rotate: -14,
+    opacity: 0.98,
     mobileVisible: true,
   },
   {
     id: 'durovs-cap',
     name: "Durov's Cap",
     src: "https://cdn.changes.tg/gifts/models/Durov's%20Cap/png/Original.png",
-    desktopPos: { top: '22%', right: '7%' },
-    mobilePos: { top: '21%', right: '4%' },
-    size: 106,
-    mobileSize: 48,
+    desktopPos: { top: '21%', right: '7%' },
+    mobilePos: { top: '17%', right: '4%' },
+    size: 108,
+    mobileSize: 46,
     floatVariant: 'b',
     floatDuration: 7.0,
     floatDelay: -1.6,
-    depth: 18,
+    depth: 20,
     rotate: 12,
+    opacity: 0.95,
     mobileVisible: true,
   },
   {
@@ -63,83 +69,89 @@ const FLOATING_GIFTS: GiftNode[] = [
     name: 'Magic Potion',
     src: 'https://cdn.changes.tg/gifts/models/Magic%20Potion/png/Original.png',
     desktopPos: { top: '48%', left: '5%' },
-    size: 98,
+    size: 96,
     floatVariant: 'b',
     floatDuration: 6.8,
     floatDelay: -2.4,
-    depth: 20,
+    depth: 16,
     rotate: -17,
+    opacity: 0.84,
   },
   {
     id: 'kissed-frog',
     name: 'Kissed Frog',
     src: 'https://cdn.changes.tg/gifts/models/Kissed%20Frog/png/Original.png',
-    desktopPos: { top: '57%', right: '14%' },
-    mobilePos: { bottom: '19%', left: '5%' },
-    size: 128,
-    mobileSize: 60,
+    desktopPos: { top: '56%', right: '11%' },
+    mobilePos: { bottom: '15%', left: '4%' },
+    size: 130,
+    mobileSize: 56,
     floatVariant: 'a',
     floatDuration: 7.4,
     floatDelay: -0.9,
-    depth: 24,
+    depth: 26,
     rotate: 11,
+    opacity: 0.98,
     mobileVisible: true,
   },
   {
     id: 'signet-ring',
     name: 'Signet Ring',
     src: 'https://cdn.changes.tg/gifts/models/Signet%20Ring/png/Original.png',
-    desktopPos: { top: '76%', left: '16%' },
-    size: 96,
+    desktopPos: { top: '76%', left: '14%' },
+    size: 94,
     floatVariant: 'b',
     floatDuration: 6.6,
     floatDelay: -3.1,
-    depth: 18,
+    depth: 16,
     rotate: 15,
+    opacity: 0.86,
   },
   {
     id: 'scared-cat',
     name: 'Scared Cat',
     src: 'https://cdn.changes.tg/gifts/models/Scared%20Cat/png/Original.png',
-    desktopPos: { top: '8%', right: '21%' },
-    mobilePos: { bottom: '8%', right: '7%' },
-    size: 94,
-    mobileSize: 56,
+    desktopPos: { top: '11%', right: '20%' },
+    mobilePos: { bottom: '6%', right: '5%' },
+    size: 92,
+    mobileSize: 52,
     floatVariant: 'a',
     floatDuration: 6.1,
     floatDelay: -1.8,
-    depth: 18,
+    depth: 16,
     rotate: -11,
+    opacity: 0.85,
     mobileVisible: true,
   },
   {
     id: 'loot-bag',
     name: 'Loot Bag',
     src: 'https://cdn.changes.tg/gifts/models/Loot%20Bag/png/Original.png',
-    desktopPos: { top: '31%', left: '21%' },
-    mobilePos: { top: '20%', left: '16%' },
-    size: 88,
-    mobileSize: 38,
+    desktopPos: { top: '31%', left: '20%' },
+    mobilePos: { top: '24%', left: '14%' },
+    size: 86,
+    mobileSize: 34,
     floatVariant: 'a',
     floatDuration: 6.9,
     floatDelay: -1.2,
-    depth: 14,
+    depth: 12,
     rotate: 9,
+    opacity: 0.8,
     mobileVisible: true,
   },
   {
     id: 'astral-shard',
     name: 'Astral Shard',
     src: 'https://cdn.changes.tg/gifts/models/Astral%20Shard/png/Original.png',
-    desktopPos: { top: '79%', right: '5%' },
-    mobilePos: { bottom: '20%', right: '9%' },
-    size: 112,
-    mobileSize: 42,
+    desktopPos: { top: '78%', right: '6%' },
+    mobilePos: { bottom: '18%', right: '8%' },
+    size: 114,
+    mobileSize: 40,
     floatVariant: 'b',
     floatDuration: 7.2,
     floatDelay: -2.1,
-    depth: 14,
+    depth: 18,
     rotate: -14,
+    opacity: 0.94,
     mobileVisible: true,
   },
 ];
@@ -172,6 +184,7 @@ function FloatingGiftItem({
     '--mob-bottom': gift.mobilePos?.bottom ?? 'auto',
     '--mob-left': gift.mobilePos?.left ?? 'auto',
     '--mob-right': gift.mobilePos?.right ?? 'auto',
+    '--gift-opacity': String(gift.opacity ?? 1),
   } as React.CSSProperties;
 
   const sprite = (
@@ -240,18 +253,25 @@ export function Hero() {
   const rawY = useMotionValue(0);
   const springX = useSpring(rawX, { stiffness: 120, damping: 20, mass: 0.7 });
   const springY = useSpring(rawY, { stiffness: 120, damping: 20, mass: 0.7 });
+  const pointerRef = useRef({ x: 0.5, y: 0.45, active: false });
 
   const handlePointerMove = (e: React.PointerEvent<HTMLElement>) => {
     if (!enableParallax || e.pointerType === 'touch') return;
     const rect = e.currentTarget.getBoundingClientRect();
-    rawX.set(((e.clientX - rect.left) / rect.width) * 2 - 1);
-    rawY.set(((e.clientY - rect.top) / rect.height) * 2 - 1);
+    const nx = (e.clientX - rect.left) / rect.width;
+    const ny = (e.clientY - rect.top) / rect.height;
+    rawX.set(nx * 2 - 1);
+    rawY.set(ny * 2 - 1);
+    pointerRef.current.x = nx;
+    pointerRef.current.y = ny;
+    pointerRef.current.active = true;
   };
 
   const handlePointerLeave = () => {
     if (!enableParallax) return;
     rawX.set(0);
     rawY.set(0);
+    pointerRef.current.active = false;
   };
 
   return (
@@ -268,7 +288,9 @@ export function Hero() {
       />
       <div className="hero-bg-vignette" aria-hidden="true" />
 
-      {/* Unboxed Top Bar */}
+      <ForestSpores reducedMotion={shouldReduceMotion} pointerRef={enableParallax ? pointerRef : undefined} />
+
+      {/* Balanced Unboxed Top Bar */}
       <header className="container hero-topbar-wrap">
         <div className="hero-topbar">
           <a
@@ -285,6 +307,16 @@ export function Hero() {
               decoding="async"
               draggable={false}
             />
+          </a>
+
+          <a
+            href={PROFILE.telegram}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="topbar-handle tactile"
+          >
+            <span>{PROFILE.handle}</span>
+            <SFArrowUpRightIcon size={13} />
           </a>
         </div>
       </header>
@@ -304,8 +336,12 @@ export function Hero() {
         ))}
       </div>
 
-      {/* Centered Focal Stack + Rebuilt Music Player */}
+      {/* Centered Focal Stack + Signature Crest Halo + Frosted Music Player */}
       <div className="container hero-content">
+        <div className="hero-crest-halo" aria-hidden="true">
+          <QuarkLogo size={360} className="hero-crest-svg" />
+        </div>
+
         <motion.h1
           className="type-hero hero-title"
           initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 12 }}
@@ -320,8 +356,8 @@ export function Hero() {
           initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{
-            duration: 0.55,
-            delay: shouldReduceMotion ? 0 : 0.12,
+            duration: 0.52,
+            delay: shouldReduceMotion ? 0 : 0.1,
             ease: [0.23, 1, 0.32, 1],
           }}
         >
@@ -329,6 +365,33 @@ export function Hero() {
         </motion.p>
 
         <MusicPlayer embedded />
+
+        <motion.div
+          className="hero-actions"
+          initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{
+            duration: 0.48,
+            delay: shouldReduceMotion ? 0 : 0.18,
+            ease: [0.23, 1, 0.32, 1],
+          }}
+        >
+          <a
+            href={PROFILE.quarkBot}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hero-cta-primary tactile"
+          >
+            <QuarkLogo size={15} />
+            <span>Открыть QuarkApp</span>
+            <SFArrowUpRightIcon size={14} />
+          </a>
+
+          <a href="#quark" className="hero-cta-scroll tactile">
+            <span>К экранам</span>
+            <SFArrowDownIcon size={14} />
+          </a>
+        </motion.div>
       </div>
     </section>
   );
