@@ -1,5 +1,5 @@
 import { motion, useReducedMotion } from 'motion/react';
-import { ArrowUpRight } from 'lucide-react';
+import { SFArrowUpRightIcon } from '@/components/ui/sf-icons';
 import { PROJECTS, QUARK_NODES } from '../data/profile';
 import { GlassButton } from '@/components/ui/glass-button';
 import { QuarkLogo } from './QuarkLogo';
@@ -66,7 +66,7 @@ export function ProjectsSection() {
                   onClick={() => window.open(project.links.demo, '_blank', 'noopener,noreferrer')}
                 >
                   <span>Открыть @quarkgiftbot</span>
-                  <ArrowUpRight size={16} strokeWidth={2} />
+                  <SFArrowUpRightIcon size={15} />
                 </GlassButton>
               )}
 
@@ -78,7 +78,7 @@ export function ProjectsSection() {
                   onClick={() => window.open(project.links.channel, '_blank', 'noopener,noreferrer')}
                 >
                   <span>Канал @quarkgift</span>
-                  <ArrowUpRight size={16} strokeWidth={2} />
+                  <SFArrowUpRightIcon size={15} />
                 </GlassButton>
               )}
             </div>
@@ -114,7 +114,7 @@ export function ProjectsSection() {
               <div className="quark-node-body">
                 <div className="quark-node-head">
                   <h4 className="quark-node-title">{node.title}</h4>
-                  <ArrowUpRight size={16} className="quark-node-arrow" />
+                  <SFArrowUpRightIcon size={16} className="quark-node-arrow" />
                 </div>
                 <p className="quark-node-subtitle">{node.subtitle}</p>
               </div>

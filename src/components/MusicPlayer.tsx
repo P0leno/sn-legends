@@ -1,6 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
-import { ExternalLink, Pause, Play, Volume2, VolumeX } from 'lucide-react';
+import {
+  SFArrowUpRightIcon,
+  SFPauseIcon,
+  SFPlayIcon,
+  SFSpeakerSlashIcon,
+  SFSpeakerWaveIcon,
+} from '@/components/ui/sf-icons';
 import { FEATURED_TRACK } from '../data/profile';
 import './MusicPlayer.css';
 
@@ -159,7 +165,7 @@ export function MusicPlayer({ embedded = false }: { embedded?: boolean }) {
           aria-label="Открыть трек на SoundCloud"
         >
           <span>SoundCloud</span>
-          <ExternalLink size={14} strokeWidth={2} />
+          <SFArrowUpRightIcon size={14} />
         </a>
       </div>
 
@@ -172,9 +178,9 @@ export function MusicPlayer({ embedded = false }: { embedded?: boolean }) {
           aria-label={isPlaying ? 'Пауза' : 'Воспроизвести'}
         >
           {isPlaying ? (
-            <Pause size={18} fill="currentColor" />
+            <SFPauseIcon size={18} />
           ) : (
-            <Play size={18} fill="currentColor" className="translate-x-[1px]" />
+            <SFPlayIcon size={18} className="translate-x-[1px]" />
           )}
         </button>
 
@@ -213,7 +219,7 @@ export function MusicPlayer({ embedded = false }: { embedded?: boolean }) {
             onClick={() => setIsMuted((m) => !m)}
             aria-label={isMuted ? 'Включить звук' : 'Выключить звук'}
           >
-            {isMuted || volume === 0 ? <VolumeX size={16} /> : <Volume2 size={16} />}
+            {isMuted || volume === 0 ? <SFSpeakerSlashIcon size={16} /> : <SFSpeakerWaveIcon size={16} />}
           </button>
 
           <input

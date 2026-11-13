@@ -1,5 +1,5 @@
 import { motion, useReducedMotion } from 'motion/react';
-import { Bot, Megaphone, Send } from 'lucide-react';
+import { SFGiftIcon, SFMegaphoneIcon, SFPaperplaneIcon } from '@/components/ui/sf-icons';
 import { GlassButton } from '@/components/ui/glass-button';
 import { PROFILE } from '../data/profile';
 import './SpecsAndContact.css';
@@ -34,7 +34,7 @@ export function SpecsAndContact() {
                 contentClassName="flex items-center justify-center gap-2"
                 onClick={() => window.open(PROFILE.telegram, '_blank', 'noopener,noreferrer')}
               >
-                <Send size={16} strokeWidth={2} />
+                <SFPaperplaneIcon size={15} />
                 <span>{PROFILE.handle}</span>
               </GlassButton>
 
@@ -44,7 +44,7 @@ export function SpecsAndContact() {
                 contentClassName="flex items-center justify-center gap-2"
                 onClick={() => window.open(PROFILE.quarkBot, '_blank', 'noopener,noreferrer')}
               >
-                <Bot size={16} strokeWidth={1.8} />
+                <SFGiftIcon size={15} />
                 <span>@quarkgiftbot</span>
               </GlassButton>
 
@@ -54,7 +54,7 @@ export function SpecsAndContact() {
                 contentClassName="flex items-center justify-center gap-2"
                 onClick={() => window.open(PROFILE.quarkChannel, '_blank', 'noopener,noreferrer')}
               >
-                <Megaphone size={16} strokeWidth={1.8} />
+                <SFMegaphoneIcon size={15} />
                 <span>@quarkgift</span>
               </GlassButton>
             </div>
