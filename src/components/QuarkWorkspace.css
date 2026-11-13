@@ -1,20 +1,22 @@
 .workspace-section {
-  padding-block: clamp(44px, 6.5vw, 92px) 0;
+  padding-block: clamp(44px, 6.5vw, 88px) 0;
   overflow-x: clip;
 }
 
-.app-showcase-grid {
-  display: grid;
-  grid-template-columns: minmax(290px, 350px) minmax(0, 1fr);
-  gap: clamp(28px, 4vw, 52px);
-  align-items: center;
+.app-header-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px 32px;
+  margin-bottom: clamp(32px, 4.5vw, 52px);
 }
 
-.app-info-col {
+.app-heading-group {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 18px;
+  gap: 10px;
 }
 
 .app-title {
@@ -27,88 +29,23 @@
 
 .app-lead {
   margin: 0;
-  max-width: 34ch;
+  max-width: 38ch;
 }
 
-/* Tactile Screen Switcher with Shared Animated Highlight */
-.app-mode-list {
-  position: relative;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.app-mode-item {
-  position: relative;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 3px;
-  padding: 12px 14px;
-  border-radius: 14px;
-  text-align: left;
-  background-color: transparent;
-  transition: transform 120ms var(--ease-out);
-  z-index: 1;
-}
-
-.app-mode-active-bg {
-  position: absolute;
-  inset: 0;
-  border-radius: 14px;
-  background-color: rgba(56, 201, 119, 0.12);
-  border: 1px solid rgba(94, 240, 155, 0.24);
-  z-index: -1;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .app-mode-item:not(.is-active):hover {
-    background-color: rgba(255, 255, 255, 0.04);
-  }
-}
-
-.app-mode-title {
-  font-family: var(--font-display);
-  font-size: 1rem;
-  font-weight: 600;
-  line-height: 1.25;
-  color: var(--text-secondary);
-  transition: color 180ms ease;
-}
-
-.app-mode-item.is-active .app-mode-title {
-  color: var(--accent-bright);
-}
-
-.app-mode-caption {
-  font-size: 0.9rem;
-  line-height: 1.4;
-  color: var(--text-tertiary);
-  transition: color 180ms ease;
-}
-
-.app-mode-item.is-active .app-mode-caption {
-  color: #dbe8df;
-}
-
-/* Unified Actions */
 .app-actions-row {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 10px;
-  padding-top: 4px;
 }
 
 .app-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 7px;
+  gap: 8px;
   height: 44px;
-  padding: 0 18px;
+  padding: 0 20px;
   border-radius: 999px;
   font-family: var(--font-sans);
   font-size: 0.92rem;
@@ -130,8 +67,7 @@
 
 .app-btn--glass {
   background-color: rgba(255, 255, 255, 0.09);
-  backdrop-filter: blur(12px) saturate(140%);
-  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.14);
   color: var(--text-primary);
 }
 
@@ -145,106 +81,62 @@
   }
 }
 
-/* Right Stage: Interactive 3D CoverFlow Deck */
-.app-stage-col {
+/* Crisp Triptych Stage with Embossed Signature Quark Crest */
+.app-gallery-stage {
   position: relative;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 18px;
+  padding-top: 10px;
 }
 
 .app-stage-emblem {
   position: absolute;
   top: 44%;
   left: 50%;
-  transform: translate3d(-50%, -50%, 0) rotate(-7deg);
+  transform: translate3d(-50%, -50%, 0) rotate(-6deg);
   color: var(--accent-bright);
-  opacity: 0.075;
+  opacity: 0.065;
   pointer-events: none;
   user-select: none;
   z-index: 0;
 }
 
-.app-screens-row {
+.app-gallery-grid {
   position: relative;
-  width: 100%;
-  height: clamp(410px, 35vw, 495px);
-  perspective: 1280px;
   z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(18px, 3vw, 34px);
+  align-items: start;
+}
+
+.app-screen-card {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+@media (min-width: 761px) {
+  .app-screen-card.is-featured {
+    transform: translate3d(0, -14px, 0);
+  }
 }
 
 .app-phone-frame {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: clamp(192px, 19vw, 232px);
-  padding: 0;
+  position: relative;
+  width: 100%;
+  max-width: 288px;
   border-radius: 26px;
   overflow: hidden;
   background-color: #0e1410;
-  transform-style: preserve-3d;
-  will-change: transform, opacity;
-  transition:
-    transform 420ms cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 320ms var(--ease-out);
-}
-
-.app-phone-frame.is-center {
-  opacity: 1;
-  z-index: 3;
-  transform: translate3d(-50%, -52%, 52px) scale(1.03) rotateY(0deg);
-}
-
-.app-phone-frame.is-left {
-  opacity: 0.54;
-  z-index: 2;
-  transform: translate3d(-118%, -48%, -84px) scale(0.84) rotateY(15deg);
-}
-
-.app-phone-frame.is-right {
-  opacity: 0.54;
-  z-index: 2;
-  transform: translate3d(18%, -48%, -84px) scale(0.84) rotateY(-15deg);
-}
-
-.app-phone-frame::before,
-.app-phone-frame::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  pointer-events: none;
-}
-
-.app-phone-frame::before {
   border: 1.5px solid rgba(255, 255, 255, 0.14);
 }
 
-.app-phone-frame::after {
-  border: 1.5px solid rgba(94, 240, 155, 0.65);
-  opacity: 0;
-  transition: opacity 220ms var(--ease-out);
+.app-screen-card.is-featured .app-phone-frame {
+  border-color: rgba(94, 240, 155, 0.42);
 }
 
-.app-phone-frame.is-active::after {
-  opacity: 1;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .app-phone-frame.is-left:hover {
-    opacity: 0.82;
-    transform: translate3d(-116%, -49%, -64px) scale(0.86) rotateY(11deg);
-  }
-
-  .app-phone-frame.is-right:hover {
-    opacity: 0.82;
-    transform: translate3d(16%, -49%, -64px) scale(0.86) rotateY(-11deg);
-  }
-}
-
-/* Crop ONLY the 22:00 / battery phone status bar at top */
+/* Crop ONLY the 22:00 / battery phone status bar at top, preserving 100% HD clarity */
 .app-phone-viewport {
   position: relative;
   width: 100%;
@@ -266,66 +158,37 @@
   user-select: none;
 }
 
-/* Deck Navigation Controls */
-.app-deck-controls {
-  position: relative;
-  z-index: 2;
-  display: inline-flex;
+.app-screen-caption {
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 8px;
-  padding: 5px;
-  border-radius: 999px;
-  background-color: rgba(18, 25, 20, 0.72);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.app-deck-arrow {
-  width: 32px;
-  height: 32px;
-  border-radius: 999px;
-  display: grid;
-  place-items: center;
-  color: var(--text-secondary);
-  background-color: rgba(255, 255, 255, 0.06);
-  transition: background-color 160ms ease, color 160ms ease;
-}
-
-.app-deck-dots {
-  display: inline-flex;
-  align-items: center;
+  text-align: center;
   gap: 4px;
+  max-width: 28ch;
 }
 
-.app-deck-pill {
-  height: 30px;
-  padding: 0 12px;
-  border-radius: 999px;
-  font-size: 0.82rem;
-  font-weight: 500;
-  color: var(--text-tertiary);
-  transition: background-color 180ms ease, color 180ms ease;
+.app-screen-name {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--text-primary);
 }
 
-.app-deck-pill.is-active {
-  background-color: rgba(94, 240, 155, 0.16);
+.app-screen-card.is-featured .app-screen-name {
   color: var(--accent-bright);
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .app-deck-arrow:hover {
-    background-color: rgba(255, 255, 255, 0.14);
-    color: var(--text-primary);
-  }
-
-  .app-deck-pill:not(.is-active):hover {
-    color: var(--text-secondary);
-  }
+.app-screen-desc {
+  font-size: 0.875rem;
+  line-height: 1.42;
+  color: var(--text-secondary);
 }
 
 /* Architectural Signature Footer */
 .site-footer {
   margin-top: clamp(52px, 7vw, 84px);
-  padding-block: 24px 40px;
+  padding-block: 24px calc(36px + env(safe-area-inset-bottom, 0px));
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -378,99 +241,55 @@
   }
 }
 
-@media (max-width: 920px) {
-  .app-showcase-grid {
+/* Tablet & Mobile Responsive Clarity (No horizontal clipping) */
+@media (max-width: 760px) {
+  .app-gallery-grid {
     grid-template-columns: 1fr;
     gap: 28px;
+    justify-items: center;
   }
 
-  .app-info-col {
-    max-width: 560px;
+  .app-screen-card {
+    width: 100%;
+    max-width: 292px;
   }
 
-  .app-screens-row {
-    height: clamp(390px, 56vw, 465px);
+  .app-screen-card.is-featured {
+    order: -1;
   }
 
   .app-phone-frame {
-    width: clamp(186px, 27vw, 224px);
-  }
-}
-
-@media (max-width: 680px) {
-  .app-stage-col {
-    margin-inline: calc(var(--gutter) * -1);
-    gap: 12px;
+    max-width: 276px;
+    border-radius: 24px;
   }
 
   .app-stage-emblem {
-    transform: translate3d(-50%, -50%, 0) scale(0.74);
-  }
-
-  .app-screens-row {
-    position: static;
-    height: auto;
-    perspective: none;
-    display: flex;
-    gap: 14px;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    overscroll-behavior-x: contain;
-    padding-inline: var(--gutter);
-    padding-block: 10px 12px;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .app-screens-row::-webkit-scrollbar {
-    display: none;
-  }
-
-  .app-phone-frame,
-  .app-phone-frame.is-center,
-  .app-phone-frame.is-left,
-  .app-phone-frame.is-right {
-    position: relative;
-    top: auto;
-    left: auto;
-    flex: 0 0 226px;
-    width: 226px;
-    scroll-snap-align: center;
-    opacity: 0.82;
-    transform: translate3d(0, 0, 0) scale(0.98);
-    border-radius: 22px;
-    z-index: 1;
-  }
-
-  .app-phone-frame.is-active {
-    opacity: 1;
-    transform: translate3d(0, -3px, 0) scale(1);
-    z-index: 2;
-  }
-
-  .app-deck-controls {
-    max-width: calc(100vw - var(--gutter) * 2);
-  }
-
-  .app-deck-pill {
-    padding: 0 10px;
-    font-size: 0.8125rem;
-  }
-
-  .app-actions-row {
-    width: auto;
-  }
-
-  .app-btn {
-    flex: 0 0 auto;
-    height: 44px;
-    padding: 0 16px;
-    font-size: 0.9rem;
+    transform: translate3d(-50%, -50%, 0) scale(0.8);
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .app-phone-frame {
-    transition: opacity 180ms ease;
+@media (max-width: 520px) {
+  .app-header-row {
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+
+  .app-actions-row {
+    width: 100%;
+  }
+
+  .app-btn {
+    flex: 1 1 auto;
+    min-width: 0;
+    height: 46px;
+    padding: 0 16px;
+    font-size: 0.9rem;
+  }
+
+  .site-footer {
+    margin-top: 44px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
   }
 }

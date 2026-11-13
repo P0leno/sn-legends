@@ -26,42 +26,34 @@ export interface TelegramLinkItem {
 
 export const PROFILE = {
   name: 'сн легендс',
-  handle: '@sn_legends',
   heroTitle: 'сн легендс',
   heroSubtitle: 'Создатель QUARK в Telegram',
-  telegram: 'https://t.me/sn_legends',
   quarkBot: 'https://t.me/quarkgiftbot',
   quarkChannel: 'https://t.me/quarkgift',
 };
 
 export const APP_SCREENS: AppScreenItem[] = [
   {
-    id: 'menu',
-    title: 'Меню режимов',
-    caption: 'Краш, кейсы, апгрейдер, ивенты и инвентарь подарков.',
-    src: './assets/quark/app-menu.jpg',
-  },
-  {
     id: 'crash',
     title: 'Краш',
     caption: 'Живой множитель раунда и цели в один тап.',
-    src: './assets/quark/app-crash.jpg',
+    src: './assets/quark/app-crash-hd.jpg',
+  },
+  {
+    id: 'menu',
+    title: 'Меню режимов',
+    caption: 'Краш, кейсы, апгрейдер, ивенты и инвентарь подарков.',
+    src: './assets/quark/app-menu-hd.jpg',
   },
   {
     id: 'case',
     title: 'Кейсы',
     caption: 'Рулетка кейсов с редкими Telegram-подарками.',
-    src: './assets/quark/app-case.jpg',
+    src: './assets/quark/app-case-hd.jpg',
   },
 ];
 
 export const TELEGRAM_LINKS: TelegramLinkItem[] = [
-  {
-    id: 'tg-personal',
-    handle: '@sn_legends',
-    note: 'Личный Telegram',
-    href: 'https://t.me/sn_legends',
-  },
   {
     id: 'tg-bot',
     handle: '@quarkgiftbot',

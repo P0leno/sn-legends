@@ -310,12 +310,12 @@ export function Hero() {
           </a>
 
           <a
-            href={PROFILE.telegram}
+            href={PROFILE.quarkBot}
             target="_blank"
             rel="noopener noreferrer"
             className="topbar-handle tactile"
           >
-            <span>{PROFILE.handle}</span>
+            <span>@quarkgiftbot</span>
             <SFArrowUpRightIcon size={13} />
           </a>
         </div>
@@ -388,7 +388,7 @@ export function Hero() {
           </a>
 
           <a href="#quark" className="hero-cta-scroll tactile">
-            <span>К экранам</span>
+            <span>Скриншоты</span>
             <SFArrowDownIcon size={14} />
           </a>
         </motion.div>

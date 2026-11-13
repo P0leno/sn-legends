@@ -306,26 +306,45 @@
   .hero-section {
     min-height: 100svh;
     padding-top: calc(14px + env(safe-area-inset-top, 0px));
-    padding-bottom: 32px;
+    padding-bottom: 28px;
   }
 
   .hero-topbar-wrap {
-    margin-bottom: 10px;
+    margin-bottom: 8px;
+  }
+
+  .topbar-wordmark-img {
+    height: 24px;
+  }
+
+  .topbar-handle {
+    height: 32px;
+    padding: 0 11px;
+    font-size: 0.8125rem;
   }
 
   .hero-crest-halo {
-    transform: translate3d(-50%, -50%, 0) scale(0.76);
+    transform: translate3d(-50%, -50%, 0) scale(0.72);
+  }
+
+  .hero-subtitle {
+    margin-top: 10px;
+    font-size: 1rem;
   }
 
   .hero-actions {
-    margin-top: 16px;
+    width: 100%;
+    max-width: 446px;
+    margin-top: 14px;
+    gap: 8px;
   }
 
   .hero-cta-primary,
   .hero-cta-scroll {
+    flex: 1 1 0;
     height: 44px;
-    padding: 0 16px;
-    font-size: 0.9rem;
+    padding: 0 12px;
+    font-size: 0.86rem;
   }
 }
 
