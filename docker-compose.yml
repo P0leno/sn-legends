@@ -1,0 +1,9 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: quark-personal-site
+    ports:
+      - "8080:80"
+    restart: unless-stopped
