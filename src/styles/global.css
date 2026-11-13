@@ -185,9 +185,7 @@ button {
 .tactile {
   transition:
     transform 120ms var(--ease-out),
-    background-color 180ms ease,
-    border-color 180ms ease,
-    opacity 180ms ease;
+    opacity 160ms ease;
 }
 
 .tactile:active {

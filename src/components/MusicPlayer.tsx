@@ -21,12 +21,17 @@ export function MusicPlayer({ embedded = false }: { embedded?: boolean }) {
   const shouldReduceMotion = useReducedMotion();
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
   const [volume, setVolume] = useState(0.85);
-  const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(FEATURED_TRACK.durationSeconds);
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const scrubRef = useRef<HTMLDivElement | null>(null);
+  const fillRef = useRef<HTMLDivElement | null>(null);
+  const thumbRailRef = useRef<HTMLDivElement | null>(null);
+  const timeTextRef = useRef<HTMLSpanElement | null>(null);
+  const currentTimeRef = useRef(0);
+  const lastRenderedSecRef = useRef(-1);
   const draggingRef = useRef(false);
 
   useEffect(() => {
@@ -34,6 +39,29 @@ export function MusicPlayer({ embedded = false }: { embedded?: boolean }) {
     audioRef.current.muted = isMuted;
     audioRef.current.volume = isMuted ? 0 : volume;
   }, [isMuted, volume]);
+
+  const applyVisualProgress = (sec: number, totalDuration: number) => {
+    currentTimeRef.current = sec;
+    const ratio = totalDuration > 0 ? Math.min(1, Math.max(0, sec / totalDuration)) : 0;
+
+    if (fillRef.current) {
+      fillRef.current.style.transform = `scaleX(${ratio})`;
+    }
+    if (thumbRailRef.current) {
+      thumbRailRef.current.style.transform = `translate3d(${ratio * 100}%, 0, 0)`;
+    }
+
+    const wholeSec = Math.max(0, Math.floor(sec));
+    if (wholeSec !== lastRenderedSecRef.current) {
+      lastRenderedSecRef.current = wholeSec;
+      if (timeTextRef.current) {
+        timeTextRef.current.textContent = formatTime(wholeSec);
+      }
+      if (scrubRef.current) {
+        scrubRef.current.setAttribute('aria-valuenow', String(wholeSec));
+      }
+    }
+  };
 
   const togglePlay = async () => {
     const audioEl = audioRef.current;
@@ -56,7 +84,7 @@ export function MusicPlayer({ embedded = false }: { embedded?: boolean }) {
   const seekToRatio = (ratio: number) => {
     const clamped = Math.min(1, Math.max(0, ratio));
     const next = clamped * duration;
-    setCurrentTime(next);
+    applyVisualProgress(next, duration);
     if (audioRef.current) {
       audioRef.current.currentTime = next;
     }
@@ -72,6 +100,7 @@ export function MusicPlayer({ embedded = false }: { embedded?: boolean }) {
 
   const handleScrubPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     draggingRef.current = true;
+    setIsDragging(true);
     e.currentTarget.setPointerCapture(e.pointerId);
     seekFromClientX(e.clientX);
   };
@@ -82,7 +111,9 @@ export function MusicPlayer({ embedded = false }: { embedded?: boolean }) {
   };
 
   const handleScrubPointerEnd = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!draggingRef.current) return;
     draggingRef.current = false;
+    setIsDragging(false);
     if (e.currentTarget.hasPointerCapture(e.pointerId)) {
       e.currentTarget.releasePointerCapture(e.pointerId);
     }
@@ -92,10 +123,10 @@ export function MusicPlayer({ embedded = false }: { embedded?: boolean }) {
     if (duration <= 0) return;
     if (e.key === 'ArrowRight') {
       e.preventDefault();
-      seekToRatio((currentTime + 5) / duration);
+      seekToRatio((currentTimeRef.current + 5) / duration);
     } else if (e.key === 'ArrowLeft') {
       e.preventDefault();
-      seekToRatio((currentTime - 5) / duration);
+      seekToRatio((currentTimeRef.current - 5) / duration);
     } else if (e.key === 'Home') {
       e.preventDefault();
       seekToRatio(0);
@@ -105,16 +136,14 @@ export function MusicPlayer({ embedded = false }: { embedded?: boolean }) {
     }
   };
 
-  const progress = duration > 0 ? Math.min(100, (currentTime / duration) * 100) : 0;
-
   const widget = (
     <motion.div
-      className="music-widget"
-      initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 18, scale: 0.98 }}
-      animate={embedded ? { opacity: 1, y: 0, scale: 1 } : undefined}
-      whileInView={embedded ? undefined : { opacity: 1, y: 0, scale: 1 }}
-      viewport={embedded ? undefined : { once: true, amount: 0.35 }}
-      transition={{ duration: 0.5, delay: embedded && !shouldReduceMotion ? 0.24 : 0, ease: [0.23, 1, 0.32, 1] }}
+      className={`music-widget ${isDragging ? 'is-dragging' : ''}`}
+      initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 12 }}
+      animate={embedded ? { opacity: 1, y: 0 } : undefined}
+      whileInView={embedded ? undefined : { opacity: 1, y: 0 }}
+      viewport={embedded ? undefined : { once: true, amount: 0.2 }}
+      transition={{ duration: 0.36, delay: embedded && !shouldReduceMotion ? 0.14 : 0, ease: [0.23, 1, 0.32, 1] }}
     >
       <audio
         ref={audioRef}
@@ -127,12 +156,12 @@ export function MusicPlayer({ embedded = false }: { embedded?: boolean }) {
         }}
         onTimeUpdate={() => {
           if (audioRef.current && !draggingRef.current) {
-            setCurrentTime(audioRef.current.currentTime);
+            applyVisualProgress(audioRef.current.currentTime, duration);
           }
         }}
         onEnded={() => {
           setIsPlaying(false);
-          setCurrentTime(0);
+          applyVisualProgress(0, duration);
         }}
       />
 
@@ -144,6 +173,7 @@ export function MusicPlayer({ embedded = false }: { embedded?: boolean }) {
             alt={`${FEATURED_TRACK.artist} — ${FEATURED_TRACK.title}`}
             className="music-cover-img"
             loading="eager"
+            decoding="async"
           />
           <span className={`music-cover-eq ${isPlaying ? 'is-active' : ''}`} aria-hidden="true">
             <span />
@@ -169,7 +199,7 @@ export function MusicPlayer({ embedded = false }: { embedded?: boolean }) {
         </a>
       </div>
 
-      {/* Row 2: Play/Pause + Smooth Scrubber with Thumb + Volume */}
+      {/* Row 2: Play/Pause + Composite-Only Scrubber + Volume */}
       <div className="music-transport-row">
         <button
           type="button"
@@ -193,7 +223,7 @@ export function MusicPlayer({ embedded = false }: { embedded?: boolean }) {
             aria-label="Перемотка трека"
             aria-valuemin={0}
             aria-valuemax={Math.round(duration)}
-            aria-valuenow={Math.round(currentTime)}
+            aria-valuenow={0}
             onPointerDown={handleScrubPointerDown}
             onPointerMove={handleScrubPointerMove}
             onPointerUp={handleScrubPointerEnd}
@@ -201,13 +231,26 @@ export function MusicPlayer({ embedded = false }: { embedded?: boolean }) {
             onKeyDown={handleScrubKeyDown}
           >
             <div className="music-progress-track">
-              <div className="music-progress-fill" style={{ width: `${progress}%` }} />
-              <span className="music-progress-thumb" style={{ left: `${progress}%` }} aria-hidden="true" />
+              <div className="music-progress-clip">
+                <div
+                  ref={fillRef}
+                  className="music-progress-fill"
+                  style={{ transform: 'scaleX(0)' }}
+                />
+              </div>
+              <div
+                ref={thumbRailRef}
+                className="music-progress-thumb-rail"
+                style={{ transform: 'translate3d(0%, 0, 0)' }}
+                aria-hidden="true"
+              >
+                <span className="music-progress-thumb" />
+              </div>
             </div>
           </div>
 
           <div className="music-time-row tabular-nums">
-            <span>{formatTime(currentTime)}</span>
+            <span ref={timeTextRef}>0:00</span>
             <span>{formatTime(duration)}</span>
           </div>
         </div>

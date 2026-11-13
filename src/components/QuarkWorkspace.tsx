@@ -75,10 +75,10 @@ export function QuarkWorkspace() {
 
           <motion.div
             className="app-stage-col"
-            initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 16 }}
+            initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.15 }}
-            transition={{ duration: 0.45, ease: [0.23, 1, 0.32, 1] }}
+            viewport={{ once: true, amount: 0.08 }}
+            transition={{ duration: 0.32, ease: [0.23, 1, 0.32, 1] }}
           >
             <div className="app-screens-row">
               {APP_SCREENS.map((screen) => {
@@ -101,6 +101,7 @@ export function QuarkWorkspace() {
                         alt={`QuarkApp — ${screen.title}`}
                         className="app-phone-img"
                         loading="eager"
+                        decoding="async"
                         draggable={false}
                       />
                     </div>

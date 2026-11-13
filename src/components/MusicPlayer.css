@@ -20,13 +20,15 @@
   gap: 13px;
   padding: 15px 17px;
   border-radius: 22px;
+  isolation: isolate;
+  transform: translateZ(0);
   background: linear-gradient(
     180deg,
-    rgba(24, 34, 27, 0.52) 0%,
-    rgba(13, 19, 15, 0.44) 100%
+    rgba(24, 34, 27, 0.56) 0%,
+    rgba(13, 19, 15, 0.48) 100%
   );
-  backdrop-filter: blur(26px) saturate(165%);
-  -webkit-backdrop-filter: blur(26px) saturate(165%);
+  backdrop-filter: blur(16px) saturate(155%);
+  -webkit-backdrop-filter: blur(16px) saturate(155%);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.24),
     inset 0 0 0 1px rgba(255, 255, 255, 0.1),
@@ -85,9 +87,11 @@
 
 .music-cover-eq span {
   width: 3px;
-  height: 6px;
+  height: 18px;
   border-radius: 999px;
   background-color: #5ef09b;
+  transform-origin: bottom center;
+  transform: scaleY(0.34);
 }
 
 .music-cover-eq.is-active span:nth-child(1) {
@@ -104,10 +108,10 @@
 
 @keyframes eq-bars {
   0% {
-    height: 6px;
+    transform: scaleY(0.34);
   }
   100% {
-    height: 18px;
+    transform: scaleY(1);
   }
 }
 
@@ -213,15 +217,37 @@
   background-color: rgba(255, 255, 255, 0.16);
 }
 
+.music-progress-clip {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  overflow: hidden;
+}
+
 .music-progress-fill {
+  width: 100%;
   height: 100%;
   border-radius: inherit;
   background-color: #5ef09b;
-  transition: width 120ms linear;
+  transform-origin: left center;
+  transition: transform 110ms linear;
+}
+
+.music-progress-thumb-rail {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  transition: transform 110ms linear;
+}
+
+.music-widget.is-dragging .music-progress-fill,
+.music-widget.is-dragging .music-progress-thumb-rail {
+  transition: none;
 }
 
 .music-progress-thumb {
   position: absolute;
+  left: 0;
   top: 50%;
   width: 14px;
   height: 14px;
@@ -230,7 +256,7 @@
   border: 2px solid #5ef09b;
   transform: translate(-50%, -50%);
   pointer-events: none;
-  transition: left 120ms linear, transform 140ms var(--ease-out);
+  transition: transform 140ms var(--ease-out);
 }
 
 .music-progress-hitbox:hover .music-progress-thumb,
@@ -332,6 +358,6 @@
 @media (prefers-reduced-motion: reduce) {
   .music-cover-eq.is-active span {
     animation: none;
-    height: 10px;
+    transform: scaleY(0.55);
   }
 }

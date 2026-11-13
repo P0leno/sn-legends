@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import {
   motion,
   useMotionValue,
@@ -148,6 +149,7 @@ interface FloatingGiftItemProps {
   index: number;
   springX: MotionValue<number>;
   springY: MotionValue<number>;
+  enableParallax: boolean;
   shouldReduceMotion: boolean;
 }
 
@@ -156,10 +158,11 @@ function FloatingGiftItem({
   index,
   springX,
   springY,
+  enableParallax,
   shouldReduceMotion,
 }: FloatingGiftItemProps) {
-  const x = useTransform(springX, (v) => (shouldReduceMotion ? 0 : v * gift.depth));
-  const y = useTransform(springY, (v) => (shouldReduceMotion ? 0 : v * gift.depth));
+  const x = useTransform(springX, (v) => (enableParallax ? v * gift.depth : 0));
+  const y = useTransform(springY, (v) => (enableParallax ? v * gift.depth : 0));
 
   const anchorVars = {
     '--desk-top': gift.desktopPos.top,
@@ -171,61 +174,82 @@ function FloatingGiftItem({
     '--mob-right': gift.mobilePos?.right ?? 'auto',
   } as React.CSSProperties;
 
+  const sprite = (
+    <div
+      className={`gift-sprite gift-float-${gift.floatVariant}`}
+      style={
+        {
+          width: gift.size,
+          height: gift.size,
+          '--mob-size': `${gift.mobileSize ?? 52}px`,
+          animationDuration: `${gift.floatDuration}s`,
+          animationDelay: `${gift.floatDelay}s`,
+        } as React.CSSProperties
+      }
+    >
+      <img
+        src={gift.src}
+        alt=""
+        className="gift-img"
+        style={{ transform: `rotate(${gift.rotate}deg)` }}
+        loading="eager"
+        decoding="async"
+        draggable={false}
+      />
+    </div>
+  );
+
   return (
     <motion.div
       className={`gift-anchor ${gift.mobileVisible ? 'is-mobile-visible' : ''}`}
       style={anchorVars}
-      initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.78 }}
+      initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.88 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{
-        duration: 0.65,
-        delay: shouldReduceMotion ? 0 : 0.05 + index * 0.04,
+        duration: 0.42,
+        delay: shouldReduceMotion ? 0 : 0.03 + index * 0.025,
         ease: [0.23, 1, 0.32, 1],
       }}
     >
-      <motion.div className="gift-parallax" style={{ x, y }}>
-        <div
-          className={`gift-sprite gift-float-${gift.floatVariant}`}
-          style={
-            {
-              width: gift.size,
-              height: gift.size,
-              '--mob-size': `${gift.mobileSize ?? 52}px`,
-              '--gift-rot': `${gift.rotate}deg`,
-              '--float-dur': `${gift.floatDuration}s`,
-              '--float-delay': `${gift.floatDelay}s`,
-            } as React.CSSProperties
-          }
-        >
-          <img
-            src={gift.src}
-            alt=""
-            className="gift-img"
-            loading="eager"
-            draggable={false}
-          />
-        </div>
-      </motion.div>
+      {enableParallax ? (
+        <motion.div className="gift-parallax" style={{ x, y }}>
+          {sprite}
+        </motion.div>
+      ) : (
+        sprite
+      )}
     </motion.div>
   );
 }
 
 export function Hero() {
   const shouldReduceMotion = Boolean(useReducedMotion());
+  const [canParallax, setCanParallax] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia('(hover: hover) and (pointer: fine)');
+    const update = () => setCanParallax(mq.matches);
+    update();
+    mq.addEventListener('change', update);
+    return () => mq.removeEventListener('change', update);
+  }, []);
+
+  const enableParallax = canParallax && !shouldReduceMotion;
 
   const rawX = useMotionValue(0);
   const rawY = useMotionValue(0);
-  const springX = useSpring(rawX, { stiffness: 110, damping: 18, mass: 0.8 });
-  const springY = useSpring(rawY, { stiffness: 110, damping: 18, mass: 0.8 });
+  const springX = useSpring(rawX, { stiffness: 120, damping: 20, mass: 0.7 });
+  const springY = useSpring(rawY, { stiffness: 120, damping: 20, mass: 0.7 });
 
   const handlePointerMove = (e: React.PointerEvent<HTMLElement>) => {
-    if (shouldReduceMotion || e.pointerType === 'touch') return;
+    if (!enableParallax || e.pointerType === 'touch') return;
     const rect = e.currentTarget.getBoundingClientRect();
     rawX.set(((e.clientX - rect.left) / rect.width) * 2 - 1);
     rawY.set(((e.clientY - rect.top) / rect.height) * 2 - 1);
   };
 
   const handlePointerLeave = () => {
+    if (!enableParallax) return;
     rawX.set(0);
     rawY.set(0);
   };
@@ -234,8 +258,8 @@ export function Hero() {
     <section
       id="overview"
       className="hero-section"
-      onPointerMove={handlePointerMove}
-      onPointerLeave={handlePointerLeave}
+      onPointerMove={enableParallax ? handlePointerMove : undefined}
+      onPointerLeave={enableParallax ? handlePointerLeave : undefined}
     >
       <div
         className="hero-bg-forest"
@@ -258,6 +282,7 @@ export function Hero() {
               src="./assets/quark/quark-wordmark.png"
               alt="Quark"
               className="topbar-wordmark-img"
+              decoding="async"
               draggable={false}
             />
           </a>
@@ -273,6 +298,7 @@ export function Hero() {
             index={idx}
             springX={springX}
             springY={springY}
+            enableParallax={enableParallax}
             shouldReduceMotion={shouldReduceMotion}
           />
         ))}
