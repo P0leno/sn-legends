@@ -1,5 +1,5 @@
 .folders-section {
-  padding-block: clamp(56px, 8vw, 112px);
+  padding-block: clamp(44px, 7vw, 96px);
 }
 
 .folders-track {
@@ -11,7 +11,7 @@
   touch-action: pan-x pan-y;
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
-  padding-block: 24px 36px;
+  padding-block: 20px 32px;
 }
 
 .folders-track::-webkit-scrollbar {
@@ -24,7 +24,7 @@
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  gap: clamp(24px, 3.5vw, 44px);
+  gap: clamp(20px, 3.5vw, 44px);
   padding-inline: var(--gutter);
 }
 
@@ -33,16 +33,7 @@
   scroll-snap-align: center;
 }
 
-.folders-hint {
-  margin: 4px 0 0;
-  font-family: var(--font-mono);
-  font-size: 0.74rem;
-  letter-spacing: 0.04em;
-  color: var(--text-tertiary);
-  text-align: center;
-}
-
-@media (max-width: 1060px) {
+@media (max-width: 960px) {
   .folders-row {
     justify-content: flex-start;
   }

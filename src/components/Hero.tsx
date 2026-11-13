@@ -1,8 +1,15 @@
-import { useRef, useState } from 'react';
-import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react';
-import { ArrowDownRight, ChevronDown, Disc3 } from 'lucide-react';
+import { useRef } from 'react';
+import {
+  motion,
+  useMotionValue,
+  useReducedMotion,
+  useScroll,
+  useSpring,
+  useTransform,
+  type MotionValue,
+} from 'motion/react';
+import { ArrowDownRight, ChevronDown, Disc3, Send } from 'lucide-react';
 import { GlassButton } from '@/components/ui/glass-button';
-import { QuarkLogo } from './QuarkLogo';
 import { PROFILE } from '../data/profile';
 import './Hero.css';
 
@@ -11,7 +18,9 @@ interface GiftNode {
   name: string;
   src: string;
   shape: 'squircle' | 'orb';
+  layer: 'near' | 'mid' | 'far';
   tint: string;
+  borderTint: string;
   desktopPos: { top: string; left?: string; right?: string };
   mobilePos?: { top?: string; bottom?: string; left?: string; right?: string };
   size: number;
@@ -29,14 +38,16 @@ const FLOATING_GIFTS: GiftNode[] = [
     name: 'Plush Pepe',
     src: 'https://cdn.changes.tg/gifts/models/Plush%20Pepe/png/Original.png',
     shape: 'squircle',
-    tint: 'rgba(71, 184, 120, 0.24)',
-    desktopPos: { top: '14%', left: '8%' },
-    mobilePos: { top: '5%', left: '5%' },
-    size: 98,
+    layer: 'near',
+    tint: 'rgba(212, 165, 58, 0.28)',
+    borderTint: 'rgba(240, 200, 102, 0.44)',
+    desktopPos: { top: '12%', left: '7%' },
+    mobilePos: { top: 'max(18px, env(safe-area-inset-top, 18px))', left: '4%' },
+    size: 108,
     floatVariant: 'a',
     floatDuration: 6.2,
     floatDelay: 0,
-    depth: 18,
+    depth: 22,
     rotate: -7,
     mobileVisible: true,
   },
@@ -45,14 +56,16 @@ const FLOATING_GIFTS: GiftNode[] = [
     name: "Durov's Cap",
     src: "https://cdn.changes.tg/gifts/models/Durov's%20Cap/png/Original.png",
     shape: 'orb',
-    tint: 'rgba(94, 168, 125, 0.22)',
-    desktopPos: { top: '13%', right: '9%' },
-    mobilePos: { top: '4%', right: '5%' },
-    size: 90,
+    layer: 'mid',
+    tint: 'rgba(56, 168, 134, 0.26)',
+    borderTint: 'rgba(98, 212, 178, 0.4)',
+    desktopPos: { top: '12%', right: '8%' },
+    mobilePos: { top: 'max(18px, env(safe-area-inset-top, 18px))', right: '4%' },
+    size: 96,
     floatVariant: 'b',
     floatDuration: 7.0,
     floatDelay: -1.6,
-    depth: 14,
+    depth: 16,
     rotate: 6,
     mobileVisible: true,
   },
@@ -61,13 +74,15 @@ const FLOATING_GIFTS: GiftNode[] = [
     name: 'Magic Potion',
     src: 'https://cdn.changes.tg/gifts/models/Magic%20Potion/png/Original.png',
     shape: 'orb',
-    tint: 'rgba(117, 223, 163, 0.2)',
+    layer: 'mid',
+    tint: 'rgba(148, 98, 214, 0.26)',
+    borderTint: 'rgba(186, 142, 246, 0.4)',
     desktopPos: { top: '45%', left: '4%' },
     size: 84,
     floatVariant: 'b',
     floatDuration: 6.8,
     floatDelay: -2.4,
-    depth: 22,
+    depth: 18,
     rotate: -4,
   },
   {
@@ -75,13 +90,15 @@ const FLOATING_GIFTS: GiftNode[] = [
     name: 'Kissed Frog',
     src: 'https://cdn.changes.tg/gifts/models/Kissed%20Frog/png/Original.png',
     shape: 'squircle',
-    tint: 'rgba(64, 160, 108, 0.24)',
+    layer: 'near',
+    tint: 'rgba(62, 196, 118, 0.28)',
+    borderTint: 'rgba(108, 232, 158, 0.42)',
     desktopPos: { top: '46%', right: '5%' },
-    size: 92,
+    size: 104,
     floatVariant: 'a',
     floatDuration: 7.4,
     floatDelay: -0.9,
-    depth: 20,
+    depth: 24,
     rotate: 8,
   },
   {
@@ -89,14 +106,16 @@ const FLOATING_GIFTS: GiftNode[] = [
     name: 'Signet Ring',
     src: 'https://cdn.changes.tg/gifts/models/Signet%20Ring/png/Original.png',
     shape: 'squircle',
-    tint: 'rgba(167, 132, 58, 0.22)',
+    layer: 'mid',
+    tint: 'rgba(224, 168, 62, 0.26)',
+    borderTint: 'rgba(246, 198, 104, 0.42)',
     desktopPos: { top: '74%', left: '10%' },
-    mobilePos: { bottom: '7%', left: '6%' },
-    size: 86,
+    mobilePos: { bottom: '68px', left: '5%' },
+    size: 88,
     floatVariant: 'b',
     floatDuration: 6.6,
     floatDelay: -3.1,
-    depth: 16,
+    depth: 17,
     rotate: 5,
     mobileVisible: true,
   },
@@ -105,14 +124,16 @@ const FLOATING_GIFTS: GiftNode[] = [
     name: 'Scared Cat',
     src: 'https://cdn.changes.tg/gifts/models/Scared%20Cat/png/Original.png',
     shape: 'orb',
-    tint: 'rgba(132, 196, 158, 0.2)',
+    layer: 'mid',
+    tint: 'rgba(196, 88, 154, 0.24)',
+    borderTint: 'rgba(232, 132, 194, 0.38)',
     desktopPos: { top: '73%', right: '10%' },
-    mobilePos: { bottom: '6%', right: '6%' },
-    size: 88,
+    mobilePos: { bottom: '68px', right: '5%' },
+    size: 92,
     floatVariant: 'a',
     floatDuration: 6.1,
     floatDelay: -1.8,
-    depth: 17,
+    depth: 18,
     rotate: -6,
     mobileVisible: true,
   },
@@ -121,13 +142,15 @@ const FLOATING_GIFTS: GiftNode[] = [
     name: 'Eternal Rose',
     src: 'https://cdn.changes.tg/gifts/models/Eternal%20Rose/png/Original.png',
     shape: 'orb',
-    tint: 'rgba(84, 158, 122, 0.18)',
+    layer: 'far',
+    tint: 'rgba(208, 92, 118, 0.22)',
+    borderTint: 'rgba(236, 138, 160, 0.3)',
     desktopPos: { top: '24%', left: '21%' },
-    size: 68,
+    size: 62,
     floatVariant: 'a',
     floatDuration: 7.9,
     floatDelay: -2.9,
-    depth: 10,
+    depth: 9,
     rotate: -5,
   },
   {
@@ -135,45 +158,129 @@ const FLOATING_GIFTS: GiftNode[] = [
     name: 'Precious Peach',
     src: 'https://cdn.changes.tg/gifts/models/Precious%20Peach/png/Original.png',
     shape: 'squircle',
-    tint: 'rgba(182, 146, 92, 0.18)',
+    layer: 'far',
+    tint: 'rgba(232, 148, 86, 0.22)',
+    borderTint: 'rgba(246, 178, 126, 0.3)',
     desktopPos: { top: '25%', right: '21%' },
-    size: 70,
+    size: 64,
     floatVariant: 'b',
     floatDuration: 7.5,
     floatDelay: -4.2,
-    depth: 11,
+    depth: 10,
     rotate: 7,
   },
 ];
 
+interface FloatingGiftItemProps {
+  gift: GiftNode;
+  index: number;
+  springX: MotionValue<number>;
+  springY: MotionValue<number>;
+  shouldReduceMotion: boolean;
+}
+
+function FloatingGiftItem({
+  gift,
+  index,
+  springX,
+  springY,
+  shouldReduceMotion,
+}: FloatingGiftItemProps) {
+  const x = useTransform(springX, (v) => (shouldReduceMotion ? 0 : v * gift.depth));
+  const y = useTransform(springY, (v) => (shouldReduceMotion ? 0 : v * gift.depth));
+
+  const anchorVars = {
+    '--desk-top': gift.desktopPos.top,
+    '--desk-left': gift.desktopPos.left ?? 'auto',
+    '--desk-right': gift.desktopPos.right ?? 'auto',
+    '--mob-top': gift.mobilePos?.top ?? 'auto',
+    '--mob-bottom': gift.mobilePos?.bottom ?? 'auto',
+    '--mob-left': gift.mobilePos?.left ?? 'auto',
+    '--mob-right': gift.mobilePos?.right ?? 'auto',
+  } as React.CSSProperties;
+
+  return (
+    <motion.div
+      className={`gift-anchor gift-layer-${gift.layer} ${gift.mobileVisible ? 'is-mobile-visible' : ''}`}
+      style={anchorVars}
+      initial={
+        shouldReduceMotion
+          ? { opacity: 0 }
+          : { opacity: 0, scale: 0.78, filter: 'blur(8px)' }
+      }
+      animate={{
+        opacity: gift.layer === 'far' ? 0.78 : 1,
+        scale: 1,
+        filter: 'blur(0px)',
+      }}
+      transition={{
+        duration: 0.65,
+        delay: shouldReduceMotion ? 0 : 0.08 + index * 0.05,
+        ease: [0.23, 1, 0.32, 1],
+      }}
+    >
+      <motion.div className="gift-parallax" style={{ x, y }}>
+        <motion.div
+          className={`gift-card gift-${gift.shape} gift-float-${gift.floatVariant}`}
+          whileHover={shouldReduceMotion ? undefined : { scale: 1.1, rotate: 0 }}
+          whileTap={shouldReduceMotion ? undefined : { scale: 0.94 }}
+          transition={{ type: 'spring', stiffness: 360, damping: 24 }}
+          style={
+            {
+              width: gift.size,
+              height: gift.size,
+              '--gift-tint': gift.tint,
+              '--gift-border': gift.borderTint,
+              '--gift-rot': `${gift.rotate}deg`,
+              '--float-dur': `${gift.floatDuration}s`,
+              '--float-delay': `${gift.floatDelay}s`,
+            } as React.CSSProperties
+          }
+        >
+          <img
+            src={gift.src}
+            alt=""
+            className="gift-img"
+            loading="eager"
+            draggable={false}
+          />
+          <span className="gift-label-pill">{gift.name}</span>
+        </motion.div>
+      </motion.div>
+    </motion.div>
+  );
+}
+
 export function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
-  const shouldReduceMotion = useReducedMotion();
-  const [pointer, setPointer] = useState({ x: 0, y: 0 });
+  const shouldReduceMotion = Boolean(useReducedMotion());
+
+  const rawX = useMotionValue(0);
+  const rawY = useMotionValue(0);
+  const springX = useSpring(rawX, { stiffness: 110, damping: 18, mass: 0.8 });
+  const springY = useSpring(rawY, { stiffness: 110, damping: 18, mass: 0.8 });
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ['start start', 'end start'],
   });
 
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.93]);
-  const opacity = useTransform(scrollYProgress, [0, 0.85], [1, 0.14]);
-  const y = useTransform(scrollYProgress, [0, 1], [0, 56]);
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.94]);
+  const opacity = useTransform(scrollYProgress, [0, 0.85], [1, 0.16]);
+  const y = useTransform(scrollYProgress, [0, 1], [0, 52]);
   const bgY = useTransform(scrollYProgress, [0, 1], ['0%', '14%']);
-  const giftsY = useTransform(scrollYProgress, [0, 1], [0, -48]);
-
-  const headlineLines = PROFILE.heroTitle.split('\n');
+  const giftsY = useTransform(scrollYProgress, [0, 1], [0, -44]);
 
   const handlePointerMove = (e: React.PointerEvent<HTMLElement>) => {
     if (shouldReduceMotion || e.pointerType === 'touch') return;
     const rect = e.currentTarget.getBoundingClientRect();
-    const nx = ((e.clientX - rect.left) / rect.width) * 2 - 1;
-    const ny = ((e.clientY - rect.top) / rect.height) * 2 - 1;
-    setPointer({ x: nx, y: ny });
+    rawX.set(((e.clientX - rect.left) / rect.width) * 2 - 1);
+    rawY.set(((e.clientY - rect.top) / rect.height) * 2 - 1);
   };
 
   const handlePointerLeave = () => {
-    setPointer({ x: 0, y: 0 });
+    rawX.set(0);
+    rawY.set(0);
   };
 
   return (
@@ -201,125 +308,43 @@ export function Hero() {
         style={shouldReduceMotion ? undefined : { opacity, scale, y: giftsY }}
         aria-hidden="true"
       >
-        {FLOATING_GIFTS.map((gift, idx) => {
-          const offsetX = shouldReduceMotion ? 0 : pointer.x * gift.depth;
-          const offsetY = shouldReduceMotion ? 0 : pointer.y * gift.depth;
-
-          const anchorVars = {
-            '--desk-top': gift.desktopPos.top,
-            '--desk-left': gift.desktopPos.left ?? 'auto',
-            '--desk-right': gift.desktopPos.right ?? 'auto',
-            '--mob-top': gift.mobilePos?.top ?? 'auto',
-            '--mob-bottom': gift.mobilePos?.bottom ?? 'auto',
-            '--mob-left': gift.mobilePos?.left ?? 'auto',
-            '--mob-right': gift.mobilePos?.right ?? 'auto',
-          } as React.CSSProperties;
-
-          return (
-            <motion.div
-              key={gift.id}
-              className={`gift-anchor ${gift.mobileVisible ? 'is-mobile-visible' : ''}`}
-              style={anchorVars}
-              initial={
-                shouldReduceMotion
-                  ? { opacity: 0 }
-                  : { opacity: 0, scale: 0.7, filter: 'blur(8px)' }
-              }
-              animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
-              transition={{
-                duration: 0.65,
-                delay: shouldReduceMotion ? 0 : 0.1 + idx * 0.055,
-                ease: [0.23, 1, 0.32, 1],
-              }}
-            >
-              <div
-                className="gift-parallax"
-                style={{
-                  transform: `translate3d(${offsetX.toFixed(1)}px, ${offsetY.toFixed(1)}px, 0)`,
-                }}
-              >
-                <motion.div
-                  className={`gift-card gift-${gift.shape} gift-float-${gift.floatVariant}`}
-                  whileHover={shouldReduceMotion ? undefined : { scale: 1.12, rotate: 0 }}
-                  whileTap={shouldReduceMotion ? undefined : { scale: 0.94 }}
-                  transition={{ type: 'spring', stiffness: 360, damping: 24 }}
-                  style={
-                    {
-                      width: gift.size,
-                      height: gift.size,
-                      '--gift-tint': gift.tint,
-                      '--gift-rot': `${gift.rotate}deg`,
-                      '--float-dur': `${gift.floatDuration}s`,
-                      '--float-delay': `${gift.floatDelay}s`,
-                    } as React.CSSProperties
-                  }
-                >
-                  <img
-                    src={gift.src}
-                    alt=""
-                    className="gift-img"
-                    loading="eager"
-                    draggable={false}
-                  />
-                  <span className="gift-label-pill">{gift.name}</span>
-                </motion.div>
-              </div>
-            </motion.div>
-          );
-        })}
+        {FLOATING_GIFTS.map((gift, idx) => (
+          <FloatingGiftItem
+            key={gift.id}
+            gift={gift}
+            index={idx}
+            springX={springX}
+            springY={springY}
+            shouldReduceMotion={shouldReduceMotion}
+          />
+        ))}
       </motion.div>
 
-      {/* Centered Focal Content */}
+      {/* Centered Focal Content (no eyebrow above h1) */}
       <motion.div
         className="container hero-content"
         style={shouldReduceMotion ? undefined : { scale, opacity, y }}
       >
-        <motion.div
-          className="hero-status-row"
-          initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.45, ease: [0.23, 1, 0.32, 1] }}
+        <motion.h1
+          className="type-hero hero-title"
+          initial={
+            shouldReduceMotion
+              ? { opacity: 0 }
+              : { opacity: 0, y: 20, filter: 'blur(8px)' }
+          }
+          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
         >
-          <a
-            href={PROFILE.telegram}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hero-availability tactile"
-          >
-            <QuarkLogo size={15} />
-            <span>{PROFILE.availability}</span>
-          </a>
-        </motion.div>
-
-        <h1 className="type-hero hero-title">
-          {headlineLines.map((line, i) => (
-            <motion.span
-              key={line}
-              className="hero-title-line"
-              initial={
-                shouldReduceMotion
-                  ? { opacity: 0 }
-                  : { opacity: 0, y: 22, filter: 'blur(10px)' }
-              }
-              animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-              transition={{
-                duration: 0.65,
-                delay: shouldReduceMotion ? 0 : 0.08 + i * 0.08,
-                ease: [0.23, 1, 0.32, 1],
-              }}
-            >
-              {line}
-            </motion.span>
-          ))}
-        </h1>
+          {PROFILE.heroTitle}
+        </motion.h1>
 
         <motion.p
           className="type-body hero-subtitle"
-          initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 16 }}
+          initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{
             duration: 0.55,
-            delay: shouldReduceMotion ? 0 : 0.22,
+            delay: shouldReduceMotion ? 0 : 0.14,
             ease: [0.23, 1, 0.32, 1],
           }}
         >
@@ -332,7 +357,7 @@ export function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{
             duration: 0.5,
-            delay: shouldReduceMotion ? 0 : 0.3,
+            delay: shouldReduceMotion ? 0 : 0.22,
             ease: [0.23, 1, 0.32, 1],
           }}
         >
@@ -342,7 +367,7 @@ export function Hero() {
             contentClassName="flex items-center gap-2"
             onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
           >
-            <span>Проект QUARK</span>
+            <span>Смотреть QUARK</span>
             <ArrowDownRight size={17} strokeWidth={2} />
           </GlassButton>
 
@@ -355,6 +380,16 @@ export function Hero() {
             <Disc3 size={17} strokeWidth={1.8} />
             <span>Слушать трек</span>
           </GlassButton>
+
+          <a
+            href={PROFILE.telegram}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hero-handle-link tactile"
+          >
+            <Send size={14} strokeWidth={2} />
+            <span>{PROFILE.handle}</span>
+          </a>
         </motion.div>
       </motion.div>
 
@@ -364,8 +399,8 @@ export function Hero() {
         aria-label="Прокрутить вниз"
         onClick={() => document.getElementById('music')?.scrollIntoView({ behavior: 'smooth' })}
         initial={{ opacity: 0 }}
-        animate={{ opacity: 0.7 }}
-        transition={{ delay: 0.7, duration: 0.6 }}
+        animate={{ opacity: 0.72 }}
+        transition={{ delay: 0.65, duration: 0.55 }}
       >
         <ChevronDown size={18} strokeWidth={1.8} />
       </motion.button>

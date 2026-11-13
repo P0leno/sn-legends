@@ -4,18 +4,18 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-top: 56px;
+  padding-top: 48px;
   padding-bottom: 56px;
   overflow: clip;
 }
 
 .hero-bg-forest {
   position: absolute;
-  inset: -10%;
+  inset: -8%;
   background-size: cover;
-  background-position: center 42%;
-  filter: blur(22px) brightness(0.3) saturate(1.18);
-  transform: scale(1.08);
+  background-position: center 45%;
+  filter: blur(6px) brightness(0.42) saturate(1.15);
+  transform: scale(1.06);
   will-change: transform;
   pointer-events: none;
   z-index: 0;
@@ -31,8 +31,8 @@
   background:
     radial-gradient(
       44% 42% at 50% 48%,
-      rgba(62, 180, 114, 0.2) 0%,
-      rgba(22, 62, 38, 0.14) 44%,
+      rgba(62, 180, 114, 0.16) 0%,
+      rgba(22, 62, 38, 0.12) 44%,
       rgba(4, 5, 5, 0) 76%
     );
   animation: canopy-breathe 9s ease-in-out infinite;
@@ -43,12 +43,12 @@
 @keyframes canopy-breathe {
   0%,
   100% {
-    opacity: 0.86;
+    opacity: 0.85;
     transform: translate(-50%, -50%) scale(1);
   }
   50% {
     opacity: 1;
-    transform: translate(-50%, -50%) scale(1.06);
+    transform: translate(-50%, -50%) scale(1.05);
   }
 }
 
@@ -56,8 +56,8 @@
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(60% 52% at 50% 50%, transparent 32%, rgba(4, 5, 5, 0.78) 100%),
-    linear-gradient(to bottom, rgba(4, 5, 5, 0.35) 0%, transparent 18%, transparent 72%, #040505 100%);
+    radial-gradient(64% 56% at 50% 48%, rgba(4, 5, 5, 0.25) 0%, rgba(4, 5, 5, 0.84) 100%),
+    linear-gradient(to bottom, rgba(4, 5, 5, 0.38) 0%, transparent 22%, transparent 66%, #040505 100%);
   pointer-events: none;
   z-index: 0;
 }
@@ -80,8 +80,12 @@
   pointer-events: auto;
 }
 
+.gift-layer-far .gift-card {
+  filter: blur(1px);
+  opacity: 0.84;
+}
+
 .gift-parallax {
-  transition: transform 320ms var(--ease-out);
   will-change: transform;
 }
 
@@ -93,18 +97,19 @@
   padding: 12px;
   overflow: hidden;
   background:
-    radial-gradient(120% 100% at 30% 15%, var(--gift-tint, rgba(71, 184, 120, 0.22)), rgba(10, 22, 15, 0.68) 75%);
-  backdrop-filter: blur(22px) saturate(180%);
-  -webkit-backdrop-filter: blur(22px) saturate(180%);
-  border: 1px solid rgba(200, 240, 214, 0.2);
+    radial-gradient(125% 110% at 30% 15%, var(--gift-tint, rgba(71, 184, 120, 0.24)), rgba(9, 14, 11, 0.72) 78%);
+  backdrop-filter: blur(20px) saturate(175%);
+  -webkit-backdrop-filter: blur(20px) saturate(175%);
+  border: 1px solid var(--gift-border, rgba(200, 240, 214, 0.24));
   box-shadow:
-    inset 0 1px 0 0 rgba(235, 255, 242, 0.28),
-    inset 0 -8px 20px -10px rgba(0, 0, 0, 0.45),
-    0 20px 40px -14px rgba(0, 0, 0, 0.65);
+    inset 0 1px 0 0 rgba(245, 255, 248, 0.26),
+    inset 0 -8px 20px -10px rgba(0, 0, 0, 0.5),
+    0 22px 44px -16px rgba(0, 0, 0, 0.7);
   transform: rotate(var(--gift-rot, 0deg));
   transition:
     border-color 220ms ease,
-    box-shadow 260ms ease;
+    box-shadow 260ms ease,
+    filter 260ms ease;
 }
 
 .gift-card::after {
@@ -114,7 +119,7 @@
   background: linear-gradient(
     115deg,
     transparent 38%,
-    rgba(220, 252, 232, 0.14) 50%,
+    rgba(255, 255, 255, 0.14) 50%,
     transparent 62%
   );
   transform: translateX(-60%);
@@ -174,10 +179,10 @@
 }
 
 .gift-img {
-  width: 80%;
-  height: 80%;
+  width: 82%;
+  height: 82%;
   object-fit: contain;
-  filter: drop-shadow(0 8px 14px rgba(0, 0, 0, 0.42));
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.45));
   user-select: none;
   pointer-events: none;
 }
@@ -187,10 +192,11 @@
   bottom: -26px;
   left: 50%;
   transform: translateX(-50%) translateY(4px);
-  padding: 3px 9px;
+  padding: 4px 10px;
   border-radius: 999px;
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 500;
   white-space: nowrap;
   color: var(--text-primary);
   background-color: var(--glass-bg-elevated);
@@ -206,11 +212,11 @@
 
 @media (hover: hover) and (pointer: fine) {
   .gift-anchor:hover .gift-card {
-    border-color: rgba(117, 223, 163, 0.5);
+    filter: blur(0px);
+    border-color: rgba(255, 255, 255, 0.45);
     box-shadow:
-      inset 0 1px 0 0 rgba(235, 255, 242, 0.44),
-      0 26px 50px -14px rgba(0, 0, 0, 0.8),
-      0 0 28px -8px rgba(62, 180, 114, 0.35);
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.42),
+      0 28px 54px -14px rgba(0, 0, 0, 0.82);
   }
 
   .gift-anchor:hover .gift-label-pill {
@@ -229,56 +235,20 @@
   text-align: center;
   max-width: 760px;
   padding: clamp(20px, 4vw, 36px);
-  border-radius: var(--radius-xl);
   will-change: transform, opacity;
-}
-
-.hero-status-row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  margin-bottom: 22px;
-}
-
-.hero-availability {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 7px 14px;
-  border-radius: 999px;
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: var(--text-secondary);
-  background-color: var(--glass-bg);
-  backdrop-filter: blur(18px) saturate(180%);
-  -webkit-backdrop-filter: blur(18px) saturate(180%);
-  border: 1px solid var(--glass-border);
-  box-shadow: inset 0 1px 0 0 rgba(220, 248, 229, 0.12);
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .hero-availability:hover {
-    color: var(--text-primary);
-    border-color: var(--accent-border);
-  }
 }
 
 .hero-title {
   margin: 0;
   max-width: 14ch;
   color: var(--text-primary);
-  text-shadow: 0 12px 44px rgba(0, 0, 0, 0.65);
-}
-
-.hero-title-line {
-  display: block;
+  text-shadow: 0 14px 48px rgba(0, 0, 0, 0.7);
 }
 
 .hero-subtitle {
-  margin: 20px 0 0;
+  margin: 18px 0 0;
   max-width: 48ch;
+  color: #cdd8d1;
 }
 
 .hero-actions {
@@ -287,7 +257,31 @@
   align-items: center;
   justify-content: center;
   gap: 12px;
-  margin-top: 32px;
+  margin-top: 30px;
+}
+
+.hero-handle-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 46px;
+  padding: 0 16px;
+  border-radius: 999px;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background-color: rgba(11, 14, 12, 0.65);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hero-handle-link:hover {
+    color: var(--text-primary);
+    border-color: var(--accent-border);
+  }
 }
 
 .hero-scroll-cue {
@@ -296,13 +290,13 @@
   left: 50%;
   transform: translateX(-50%);
   z-index: 2;
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
   border-radius: 999px;
   display: grid;
   place-items: center;
   color: var(--text-secondary);
-  background-color: rgba(11, 14, 12, 0.55);
+  background-color: rgba(11, 14, 12, 0.58);
   border: 1px solid var(--glass-border);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -332,8 +326,8 @@
   }
 
   .gift-card {
-    width: 68px !important;
-    height: 68px !important;
+    width: 66px !important;
+    height: 66px !important;
     padding: 9px;
   }
 
@@ -345,24 +339,31 @@
 @media (max-width: 560px) {
   .hero-section {
     min-height: 100svh;
-    padding-top: calc(96px + env(safe-area-inset-top, 0px));
-    padding-bottom: 96px;
+    padding-top: calc(104px + env(safe-area-inset-top, 0px));
+    padding-bottom: 108px;
   }
 
   .gift-card {
-    width: 58px !important;
-    height: 58px !important;
+    width: 60px !important;
+    height: 60px !important;
     padding: 8px;
   }
 
   .gift-squircle {
-    border-radius: 16px;
+    border-radius: 18px;
   }
 
   .hero-actions {
     width: 100%;
     flex-direction: column;
     align-items: stretch;
+  }
+
+  .hero-actions .glass-button-wrap,
+  .hero-actions .glass-button,
+  .hero-handle-link {
+    width: 100%;
+    min-height: 46px;
   }
 
   .hero-scroll-cue {
@@ -378,9 +379,5 @@
   .hero-canopy-glow,
   .hero-scroll-cue {
     animation: none;
-  }
-
-  .gift-parallax {
-    transition: none;
   }
 }

@@ -15,15 +15,15 @@ export function SpecsAndContact() {
         <div className="container">
           <motion.div
             className="contact-card"
-            initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 24, scale: 0.98 }}
+            initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20, scale: 0.98 }}
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
           >
             <div className="contact-copy">
-              <h2 className="type-section contact-title">На связи.</h2>
+              <h2 className="type-section contact-title">Связь</h2>
               <p className="type-body contact-lead">
-                По вопросам QUARK, QuarkApp и коллабов — пиши напрямую в Telegram.
+                По вопросам QUARK, QuarkApp и сотрудничества в Telegram.
               </p>
             </div>
 
@@ -67,7 +67,14 @@ export function SpecsAndContact() {
           <span className="footer-copy tabular-nums">
             © {CURRENT_YEAR} {PROFILE.name}
           </span>
-          <span className="footer-meta">{PROFILE.handle}</span>
+          <a
+            href={PROFILE.telegram}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="footer-meta tactile"
+          >
+            {PROFILE.handle}
+          </a>
         </div>
       </footer>
     </>
