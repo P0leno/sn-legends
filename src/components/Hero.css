@@ -275,8 +275,8 @@
   }
 
   .gift-sprite {
-    width: 68px !important;
-    height: 68px !important;
+    width: var(--mob-size, 54px) !important;
+    height: var(--mob-size, 54px) !important;
   }
 }
 
@@ -289,11 +289,6 @@
 
   .hero-topbar-wrap {
     margin-bottom: 12px;
-  }
-
-  .gift-sprite {
-    width: 56px !important;
-    height: 56px !important;
   }
 }
 

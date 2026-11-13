@@ -6,6 +6,24 @@ import { GlassButton } from '@/components/ui/glass-button';
 import { QuarkLogo } from './QuarkLogo';
 import './ProjectsSection.css';
 
+const SECTION_GIFTS = [
+  {
+    id: 'section-potion',
+    src: 'https://cdn.changes.tg/gifts/models/Magic%20Potion/png/Original.png',
+    className: 'section-gift section-gift-a',
+  },
+  {
+    id: 'section-ring',
+    src: 'https://cdn.changes.tg/gifts/models/Signet%20Ring/png/Original.png',
+    className: 'section-gift section-gift-b',
+  },
+  {
+    id: 'section-shard',
+    src: 'https://cdn.changes.tg/gifts/models/Astral%20Shard/png/Original.png',
+    className: 'section-gift section-gift-c',
+  },
+];
+
 export function ProjectsSection() {
   const shouldReduceMotion = useReducedMotion();
   const cardRef = useRef<HTMLDivElement>(null);
@@ -22,7 +40,19 @@ export function ProjectsSection() {
 
   return (
     <section id="projects" className="projects-section">
-      <div className="container">
+      <div className="section-gifts-layer" aria-hidden="true">
+        {SECTION_GIFTS.map((gift) => (
+          <img
+            key={gift.id}
+            src={gift.src}
+            alt=""
+            className={gift.className}
+            loading="lazy"
+            draggable={false}
+          />
+        ))}
+      </div>
+      <div className="container projects-container">
         <motion.div
           className="section-header"
           initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 18 }}
