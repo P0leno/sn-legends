@@ -65,30 +65,23 @@ export const FEATURED_TRACK: TrackItem = {
 
 export const QUARK_NODES: QuarkNodeItem[] = [
   {
-    id: 'quark-app',
-    title: 'QuarkApp',
-    subtitle: 'Игровой мини-апп в Telegram с быстрыми раундами на подарки и мгновенным расчётом.',
-    image: './assets/quark/quark-welcome.jpg',
-    href: 'https://t.me/quarkgiftbot',
-  },
-  {
     id: 'quark-bot',
     title: '@quarkgiftbot',
-    subtitle: 'Бот для депозитов, вывода Telegram Gifts и управления игровым профилем.',
+    subtitle: 'Бот для депозитов, вывода Telegram Gifts и быстрого входа в QuarkApp.',
     image: './assets/quark/quark-bot.jpg',
     href: 'https://t.me/quarkgiftbot',
   },
   {
     id: 'quark-channel',
     title: '@quarkgift',
-    subtitle: 'Основной канал с релизами, раздачами подарков и обновлениями платформы.',
+    subtitle: 'Основной канал с релизами, раздачами подарков и новостями платформы.',
     image: './assets/quark/quark-channel.jpg',
     href: 'https://t.me/quarkgift',
   },
   {
     id: 'quark-support',
     title: 'Support',
-    subtitle: 'Прямая поддержка игроков и помощь по всем операциям с подарками.',
+    subtitle: 'Прямая поддержка игроков и помощь по любым операциям с подарками.',
     image: './assets/quark/quark-support.jpg',
     href: 'https://t.me/quarkgiftbot',
   },
@@ -112,12 +105,11 @@ export const PROJECTS: ProjectItem[] = [
       '@quarkgift: обновления, анонсы и комьюнити проекта',
     ],
     stack: ['QuarkApp', '@quarkgiftbot', '@quarkgift'],
-    banner: './assets/quark/quark-coming-soon.jpg',
+    banner: './assets/quark/quark-welcome.jpg',
     gallery: [
       './assets/quark/quark-bot.jpg',
-      './assets/quark/quark-welcome.jpg',
-      './assets/quark/quark-support.jpg',
       './assets/quark/quark-channel.jpg',
+      './assets/quark/quark-support.jpg',
     ],
     links: {
       demo: 'https://t.me/quarkgiftbot',

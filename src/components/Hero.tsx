@@ -8,8 +8,10 @@ import {
   useTransform,
   type MotionValue,
 } from 'motion/react';
-import { ArrowDownRight, ChevronDown, Disc3, Send } from 'lucide-react';
+import { ArrowDownRight, Send } from 'lucide-react';
 import { GlassButton } from '@/components/ui/glass-button';
+import { MusicPlayer } from './MusicPlayer';
+import { QuarkLogo } from './QuarkLogo';
 import { PROFILE } from '../data/profile';
 import './Hero.css';
 
@@ -22,13 +24,13 @@ interface GiftNode {
   tint: string;
   borderTint: string;
   desktopPos: { top: string; left?: string; right?: string };
-  mobilePos?: { top?: string; bottom?: string; left?: string; right?: string };
   size: number;
   floatVariant: 'a' | 'b';
   floatDuration: number;
   floatDelay: number;
   depth: number;
   rotate: number;
+  mobileArcOffset?: number;
   mobileVisible?: boolean;
 }
 
@@ -39,16 +41,16 @@ const FLOATING_GIFTS: GiftNode[] = [
     src: 'https://cdn.changes.tg/gifts/models/Plush%20Pepe/png/Original.png',
     shape: 'squircle',
     layer: 'near',
-    tint: 'rgba(212, 165, 58, 0.28)',
-    borderTint: 'rgba(240, 200, 102, 0.44)',
-    desktopPos: { top: '12%', left: '7%' },
-    mobilePos: { top: 'max(18px, env(safe-area-inset-top, 18px))', left: '4%' },
-    size: 108,
+    tint: 'rgba(234, 179, 8, 0.34)',
+    borderTint: 'rgba(250, 204, 21, 0.55)',
+    desktopPos: { top: '12%', left: '10%' },
+    size: 126,
     floatVariant: 'a',
     floatDuration: 6.2,
     floatDelay: 0,
     depth: 22,
-    rotate: -7,
+    rotate: -8,
+    mobileArcOffset: 10,
     mobileVisible: true,
   },
   {
@@ -57,16 +59,16 @@ const FLOATING_GIFTS: GiftNode[] = [
     src: "https://cdn.changes.tg/gifts/models/Durov's%20Cap/png/Original.png",
     shape: 'orb',
     layer: 'mid',
-    tint: 'rgba(56, 168, 134, 0.26)',
-    borderTint: 'rgba(98, 212, 178, 0.4)',
-    desktopPos: { top: '12%', right: '8%' },
-    mobilePos: { top: 'max(18px, env(safe-area-inset-top, 18px))', right: '4%' },
-    size: 96,
+    tint: 'rgba(16, 185, 129, 0.34)',
+    borderTint: 'rgba(52, 211, 153, 0.55)',
+    desktopPos: { top: '11%', right: '11%' },
+    size: 98,
     floatVariant: 'b',
     floatDuration: 7.0,
     floatDelay: -1.6,
     depth: 16,
-    rotate: 6,
+    rotate: 7,
+    mobileArcOffset: -4,
     mobileVisible: true,
   },
   {
@@ -75,15 +77,15 @@ const FLOATING_GIFTS: GiftNode[] = [
     src: 'https://cdn.changes.tg/gifts/models/Magic%20Potion/png/Original.png',
     shape: 'orb',
     layer: 'mid',
-    tint: 'rgba(148, 98, 214, 0.26)',
-    borderTint: 'rgba(186, 142, 246, 0.4)',
-    desktopPos: { top: '45%', left: '4%' },
-    size: 84,
+    tint: 'rgba(168, 85, 247, 0.34)',
+    borderTint: 'rgba(192, 132, 252, 0.55)',
+    desktopPos: { top: '42%', left: '7%' },
+    size: 94,
     floatVariant: 'b',
     floatDuration: 6.8,
     floatDelay: -2.4,
     depth: 18,
-    rotate: -4,
+    rotate: -5,
   },
   {
     id: 'kissed-frog',
@@ -91,15 +93,17 @@ const FLOATING_GIFTS: GiftNode[] = [
     src: 'https://cdn.changes.tg/gifts/models/Kissed%20Frog/png/Original.png',
     shape: 'squircle',
     layer: 'near',
-    tint: 'rgba(62, 196, 118, 0.28)',
-    borderTint: 'rgba(108, 232, 158, 0.42)',
-    desktopPos: { top: '46%', right: '5%' },
-    size: 104,
+    tint: 'rgba(34, 197, 94, 0.34)',
+    borderTint: 'rgba(74, 222, 128, 0.55)',
+    desktopPos: { top: '41%', right: '8%' },
+    size: 120,
     floatVariant: 'a',
     floatDuration: 7.4,
     floatDelay: -0.9,
     depth: 24,
     rotate: 8,
+    mobileArcOffset: -4,
+    mobileVisible: true,
   },
   {
     id: 'signet-ring',
@@ -107,17 +111,15 @@ const FLOATING_GIFTS: GiftNode[] = [
     src: 'https://cdn.changes.tg/gifts/models/Signet%20Ring/png/Original.png',
     shape: 'squircle',
     layer: 'mid',
-    tint: 'rgba(224, 168, 62, 0.26)',
-    borderTint: 'rgba(246, 198, 104, 0.42)',
-    desktopPos: { top: '74%', left: '10%' },
-    mobilePos: { bottom: '68px', left: '5%' },
-    size: 88,
+    tint: 'rgba(217, 119, 6, 0.34)',
+    borderTint: 'rgba(251, 191, 36, 0.55)',
+    desktopPos: { top: '69%', left: '12%' },
+    size: 96,
     floatVariant: 'b',
     floatDuration: 6.6,
     floatDelay: -3.1,
     depth: 17,
-    rotate: 5,
-    mobileVisible: true,
+    rotate: 6,
   },
   {
     id: 'scared-cat',
@@ -125,16 +127,16 @@ const FLOATING_GIFTS: GiftNode[] = [
     src: 'https://cdn.changes.tg/gifts/models/Scared%20Cat/png/Original.png',
     shape: 'orb',
     layer: 'mid',
-    tint: 'rgba(196, 88, 154, 0.24)',
-    borderTint: 'rgba(232, 132, 194, 0.38)',
-    desktopPos: { top: '73%', right: '10%' },
-    mobilePos: { bottom: '68px', right: '5%' },
-    size: 92,
+    tint: 'rgba(236, 72, 153, 0.32)',
+    borderTint: 'rgba(244, 114, 182, 0.52)',
+    desktopPos: { top: '68%', right: '12%' },
+    size: 96,
     floatVariant: 'a',
     floatDuration: 6.1,
     floatDelay: -1.8,
     depth: 18,
     rotate: -6,
+    mobileArcOffset: 10,
     mobileVisible: true,
   },
   {
@@ -143,14 +145,14 @@ const FLOATING_GIFTS: GiftNode[] = [
     src: 'https://cdn.changes.tg/gifts/models/Eternal%20Rose/png/Original.png',
     shape: 'orb',
     layer: 'far',
-    tint: 'rgba(208, 92, 118, 0.22)',
-    borderTint: 'rgba(236, 138, 160, 0.3)',
-    desktopPos: { top: '24%', left: '21%' },
-    size: 62,
+    tint: 'rgba(244, 63, 94, 0.28)',
+    borderTint: 'rgba(251, 113, 133, 0.44)',
+    desktopPos: { top: '24%', left: '22%' },
+    size: 70,
     floatVariant: 'a',
     floatDuration: 7.9,
     floatDelay: -2.9,
-    depth: 9,
+    depth: 10,
     rotate: -5,
   },
   {
@@ -159,14 +161,14 @@ const FLOATING_GIFTS: GiftNode[] = [
     src: 'https://cdn.changes.tg/gifts/models/Precious%20Peach/png/Original.png',
     shape: 'squircle',
     layer: 'far',
-    tint: 'rgba(232, 148, 86, 0.22)',
-    borderTint: 'rgba(246, 178, 126, 0.3)',
-    desktopPos: { top: '25%', right: '21%' },
-    size: 64,
+    tint: 'rgba(249, 115, 22, 0.28)',
+    borderTint: 'rgba(253, 186, 116, 0.44)',
+    desktopPos: { top: '24%', right: '22%' },
+    size: 70,
     floatVariant: 'b',
     floatDuration: 7.5,
     floatDelay: -4.2,
-    depth: 10,
+    depth: 11,
     rotate: 7,
   },
 ];
@@ -193,10 +195,7 @@ function FloatingGiftItem({
     '--desk-top': gift.desktopPos.top,
     '--desk-left': gift.desktopPos.left ?? 'auto',
     '--desk-right': gift.desktopPos.right ?? 'auto',
-    '--mob-top': gift.mobilePos?.top ?? 'auto',
-    '--mob-bottom': gift.mobilePos?.bottom ?? 'auto',
-    '--mob-left': gift.mobilePos?.left ?? 'auto',
-    '--mob-right': gift.mobilePos?.right ?? 'auto',
+    '--mob-arc-y': `${gift.mobileArcOffset ?? 0}px`,
   } as React.CSSProperties;
 
   return (
@@ -209,13 +208,13 @@ function FloatingGiftItem({
           : { opacity: 0, scale: 0.78, filter: 'blur(8px)' }
       }
       animate={{
-        opacity: gift.layer === 'far' ? 0.78 : 1,
+        opacity: gift.layer === 'far' ? 0.85 : 1,
         scale: 1,
         filter: 'blur(0px)',
       }}
       transition={{
         duration: 0.65,
-        delay: shouldReduceMotion ? 0 : 0.08 + index * 0.05,
+        delay: shouldReduceMotion ? 0 : 0.06 + index * 0.045,
         ease: [0.23, 1, 0.32, 1],
       }}
     >
@@ -265,11 +264,11 @@ export function Hero() {
     offset: ['start start', 'end start'],
   });
 
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.94]);
-  const opacity = useTransform(scrollYProgress, [0, 0.85], [1, 0.16]);
-  const y = useTransform(scrollYProgress, [0, 1], [0, 52]);
-  const bgY = useTransform(scrollYProgress, [0, 1], ['0%', '14%']);
-  const giftsY = useTransform(scrollYProgress, [0, 1], [0, -44]);
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.95]);
+  const opacity = useTransform(scrollYProgress, [0, 0.88], [1, 0.2]);
+  const y = useTransform(scrollYProgress, [0, 1], [0, 44]);
+  const bgY = useTransform(scrollYProgress, [0, 1], ['0%', '12%']);
+  const giftsY = useTransform(scrollYProgress, [0, 1], [0, -36]);
 
   const handlePointerMove = (e: React.PointerEvent<HTMLElement>) => {
     if (shouldReduceMotion || e.pointerType === 'touch') return;
@@ -291,6 +290,7 @@ export function Hero() {
       onPointerMove={handlePointerMove}
       onPointerLeave={handlePointerLeave}
     >
+      {/* Pure upper pine forest crop (no text watermark behind hero) */}
       <motion.div
         className="hero-bg-forest"
         style={{
@@ -302,7 +302,7 @@ export function Hero() {
       <div className="hero-canopy-glow" aria-hidden="true" />
       <div className="hero-bg-vignette" aria-hidden="true" />
 
-      {/* Floating Glass NFT Gifts Layer */}
+      {/* Floating Glass NFT Gifts Layer (Desktop orbit / Mobile crown arc) */}
       <motion.div
         className="hero-gifts-layer"
         style={shouldReduceMotion ? undefined : { opacity, scale, y: giftsY }}
@@ -320,20 +320,33 @@ export function Hero() {
         ))}
       </motion.div>
 
-      {/* Centered Focal Content (no eyebrow above h1) */}
+      {/* Centered Focal Stack + Embedded Audio Dock */}
       <motion.div
         className="container hero-content"
         style={shouldReduceMotion ? undefined : { scale, opacity, y }}
       >
+        <motion.div
+          className="hero-totem"
+          initial={
+            shouldReduceMotion
+              ? { opacity: 0 }
+              : { opacity: 0, scale: 0.82, y: 12 }
+          }
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ duration: 0.55, ease: [0.23, 1, 0.32, 1] }}
+        >
+          <QuarkLogo size={38} />
+        </motion.div>
+
         <motion.h1
           className="type-hero hero-title"
           initial={
             shouldReduceMotion
               ? { opacity: 0 }
-              : { opacity: 0, y: 20, filter: 'blur(8px)' }
+              : { opacity: 0, y: 18, filter: 'blur(8px)' }
           }
           animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-          transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
+          transition={{ duration: 0.6, delay: shouldReduceMotion ? 0 : 0.06, ease: [0.23, 1, 0.32, 1] }}
         >
           {PROFILE.heroTitle}
         </motion.h1>
@@ -364,21 +377,11 @@ export function Hero() {
           <GlassButton
             type="button"
             size="default"
-            contentClassName="flex items-center gap-2"
+            contentClassName="flex items-center justify-center gap-2"
             onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
           >
             <span>Смотреть QUARK</span>
             <ArrowDownRight size={17} strokeWidth={2} />
-          </GlassButton>
-
-          <GlassButton
-            type="button"
-            size="default"
-            contentClassName="flex items-center gap-2"
-            onClick={() => document.getElementById('music')?.scrollIntoView({ behavior: 'smooth' })}
-          >
-            <Disc3 size={17} strokeWidth={1.8} />
-            <span>Слушать трек</span>
           </GlassButton>
 
           <a
@@ -387,23 +390,14 @@ export function Hero() {
             rel="noopener noreferrer"
             className="hero-handle-link tactile"
           >
-            <Send size={14} strokeWidth={2} />
+            <Send size={15} strokeWidth={2} />
             <span>{PROFILE.handle}</span>
           </a>
         </motion.div>
-      </motion.div>
 
-      <motion.button
-        type="button"
-        className="hero-scroll-cue"
-        aria-label="Прокрутить вниз"
-        onClick={() => document.getElementById('music')?.scrollIntoView({ behavior: 'smooth' })}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 0.72 }}
-        transition={{ delay: 0.65, duration: 0.55 }}
-      >
-        <ChevronDown size={18} strokeWidth={1.8} />
-      </motion.button>
+        {/* Integrated iOS Lock Screen Audio Dock inside Hero */}
+        <MusicPlayer embedded />
+      </motion.div>
     </section>
   );
 }

@@ -1078,16 +1078,16 @@ canvas.gf-sheet-art[data-ready] { opacity: 1; filter: none; }
 .gf-sheet-name {
   overflow: hidden;
   text-overflow: ellipsis;
-  font-size: 12.5px;
+  font-size: 13.5px;
   font-weight: 560;
   letter-spacing: -.005em;
   color: #18181b;
 }
 .gf-sheet-meta {
   flex: none;
-  font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
-  font-size: 10px;
-  letter-spacing: .02em;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  letter-spacing: .01em;
   color: rgba(24, 24, 27, .5);
 }
 .gf-root[data-tone="dark"] .gf-sheet-name, .gf-sheet--art .gf-sheet-name { color: #fafafa; }
@@ -1196,9 +1196,9 @@ canvas.gf-sheet-art[data-ready] { opacity: 1; filter: none; }
   white-space: nowrap;
 }
 .gf-meta {
-  font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
-  font-size: 12px;
-  letter-spacing: .03em;
+  font-family: var(--font-sans);
+  font-size: 13.5px;
+  letter-spacing: .01em;
   color: var(--gf-ink-soft);
   white-space: nowrap;
   animation: gf-roll .5s var(--gf-ease) both;

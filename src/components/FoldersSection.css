@@ -1,5 +1,5 @@
 .folders-section {
-  padding-block: clamp(44px, 7vw, 96px);
+  padding-block: clamp(36px, 5vw, 64px);
 }
 
 .folders-track {
@@ -35,6 +35,21 @@
 
 @media (max-width: 960px) {
   .folders-row {
-    justify-content: flex-start;
+    justify-content: center;
+    gap: 24px;
+  }
+}
+
+@media (max-width: 640px) {
+  .folders-track {
+    overflow-x: visible;
+    padding-block: 16px 24px;
+  }
+
+  .folders-row {
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    gap: 28px;
   }
 }

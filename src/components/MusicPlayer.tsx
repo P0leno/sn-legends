@@ -13,7 +13,7 @@ function formatTime(sec: number): string {
   return `${m}:${s.toString().padStart(2, '0')}`;
 }
 
-export function MusicPlayer() {
+export function MusicPlayer({ embedded = false }: { embedded?: boolean }) {
   const shouldReduceMotion = useReducedMotion();
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
@@ -166,128 +166,139 @@ export function MusicPlayer() {
 
   const progress = duration > 0 ? Math.min(100, (currentTime / duration) * 100) : 0;
 
+  const widget = (
+    <motion.div
+      className="music-widget"
+      initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 18, scale: 0.98 }}
+      animate={embedded ? { opacity: 1, y: 0, scale: 1 } : undefined}
+      whileInView={embedded ? undefined : { opacity: 1, y: 0, scale: 1 }}
+      viewport={embedded ? undefined : { once: true, amount: 0.35 }}
+      transition={{ duration: 0.5, delay: embedded && !shouldReduceMotion ? 0.28 : 0, ease: [0.23, 1, 0.32, 1] }}
+    >
+      {hasAudioFile && (
+        <audio
+          ref={audioRef}
+          src={FEATURED_TRACK.audioSrc}
+          preload="metadata"
+          onLoadedMetadata={() => {
+            if (audioRef.current && Number.isFinite(audioRef.current.duration)) {
+              setDuration(audioRef.current.duration);
+            }
+          }}
+          onTimeUpdate={() => {
+            if (audioRef.current) setCurrentTime(audioRef.current.currentTime);
+          }}
+          onEnded={() => setIsPlaying(false)}
+        />
+      )}
+
+      <div className="music-top-row">
+        <div className="music-identity">
+          <div className={`music-cover-wrap ${isPlaying ? 'is-playing' : ''}`}>
+            <img
+              src={FEATURED_TRACK.cover}
+              alt={`${FEATURED_TRACK.artist} — ${FEATURED_TRACK.title}`}
+              className="music-cover-img"
+              loading="eager"
+            />
+          </div>
+
+          <div className="music-meta">
+            <h2 className="music-track-title">{FEATURED_TRACK.title}</h2>
+            <p className="music-track-artist">{FEATURED_TRACK.artist}</p>
+          </div>
+        </div>
+
+        <div className="music-actions">
+          <button
+            type="button"
+            className="music-mute-btn tactile"
+            onClick={() => setIsMuted((m) => !m)}
+            aria-label={isMuted ? 'Включить звук' : 'Выключить звук'}
+          >
+            {isMuted ? <VolumeX size={16} /> : <Volume2 size={16} />}
+          </button>
+
+          <button
+            type="button"
+            className="music-play-btn tactile"
+            onClick={togglePlay}
+            aria-label={isPlaying ? 'Пауза' : 'Воспроизвести'}
+          >
+            {isPlaying ? (
+              <Pause size={18} fill="currentColor" />
+            ) : (
+              <Play size={18} fill="currentColor" className="translate-x-[1px]" />
+            )}
+          </button>
+
+          <a
+            href={FEATURED_TRACK.soundcloudUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="music-sc-link tactile"
+            aria-label="Открыть трек на SoundCloud"
+          >
+            <span>SoundCloud</span>
+            <ExternalLink size={14} strokeWidth={2} />
+          </a>
+        </div>
+      </div>
+
+      <div className="music-bottom-row">
+        <div className="music-visualizer" aria-hidden="true">
+          {BAR_HEIGHTS.map((h, i) => (
+            <span
+              key={i}
+              className={`music-bar ${isPlaying ? 'is-active' : ''}`}
+              style={
+                {
+                  '--bar-h': `${Math.round(h * 100)}%`,
+                  '--bar-delay': `${(i * 0.06).toFixed(2)}s`,
+                } as React.CSSProperties
+              }
+            />
+          ))}
+        </div>
+
+        <div
+          ref={scrubRef}
+          className="music-progress-hitbox"
+          role="slider"
+          tabIndex={0}
+          aria-label="Позиция трека"
+          aria-valuemin={0}
+          aria-valuemax={Math.round(duration)}
+          aria-valuenow={Math.round(currentTime)}
+          onPointerDown={handleScrubPointerDown}
+          onPointerMove={handleScrubPointerMove}
+          onPointerUp={handleScrubPointerEnd}
+          onPointerCancel={handleScrubPointerEnd}
+        >
+          <div className="music-progress-track">
+            <div className="music-progress-fill" style={{ width: `${progress}%` }} />
+          </div>
+        </div>
+
+        <div className="music-time-row tabular-nums">
+          <span>{formatTime(currentTime)}</span>
+          <span>{formatTime(duration)}</span>
+        </div>
+      </div>
+    </motion.div>
+  );
+
+  if (embedded) {
+    return (
+      <div id="music" className="music-embedded-wrap" aria-label="Аудиоплеер">
+        {widget}
+      </div>
+    );
+  }
+
   return (
     <section id="music" className="music-section" aria-label="Аудиоплеер">
-      <div className="container">
-        <motion.div
-          className="music-widget"
-          initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20, scale: 0.98 }}
-          whileInView={{ opacity: 1, y: 0, scale: 1 }}
-          viewport={{ once: true, amount: 0.35 }}
-          transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
-        >
-          {hasAudioFile && (
-            <audio
-              ref={audioRef}
-              src={FEATURED_TRACK.audioSrc}
-              preload="metadata"
-              onLoadedMetadata={() => {
-                if (audioRef.current && Number.isFinite(audioRef.current.duration)) {
-                  setDuration(audioRef.current.duration);
-                }
-              }}
-              onTimeUpdate={() => {
-                if (audioRef.current) setCurrentTime(audioRef.current.currentTime);
-              }}
-              onEnded={() => setIsPlaying(false)}
-            />
-          )}
-
-          <div className="music-top-row">
-            <div className="music-identity">
-              <div className={`music-cover-wrap ${isPlaying ? 'is-playing' : ''}`}>
-                <img
-                  src={FEATURED_TRACK.cover}
-                  alt={`${FEATURED_TRACK.artist} — ${FEATURED_TRACK.title}`}
-                  className="music-cover-img"
-                  loading="lazy"
-                />
-              </div>
-
-              <div className="music-meta">
-                <h2 className="music-track-title">{FEATURED_TRACK.title}</h2>
-                <p className="music-track-artist">{FEATURED_TRACK.artist}</p>
-              </div>
-            </div>
-
-            <div className="music-actions">
-              <button
-                type="button"
-                className="music-mute-btn tactile"
-                onClick={() => setIsMuted((m) => !m)}
-                aria-label={isMuted ? 'Включить звук' : 'Выключить звук'}
-              >
-                {isMuted ? <VolumeX size={16} /> : <Volume2 size={16} />}
-              </button>
-
-              <button
-                type="button"
-                className="music-play-btn tactile"
-                onClick={togglePlay}
-                aria-label={isPlaying ? 'Пауза' : 'Воспроизвести'}
-              >
-                {isPlaying ? (
-                  <Pause size={18} fill="currentColor" />
-                ) : (
-                  <Play size={18} fill="currentColor" className="translate-x-[1px]" />
-                )}
-              </button>
-
-              <a
-                href={FEATURED_TRACK.soundcloudUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="music-sc-link tactile"
-                aria-label="Открыть трек на SoundCloud"
-              >
-                <span>SoundCloud</span>
-                <ExternalLink size={13} strokeWidth={2} />
-              </a>
-            </div>
-          </div>
-
-          <div className="music-bottom-row">
-            <div className="music-visualizer" aria-hidden="true">
-              {BAR_HEIGHTS.map((h, i) => (
-                <span
-                  key={i}
-                  className={`music-bar ${isPlaying ? 'is-active' : ''}`}
-                  style={
-                    {
-                      '--bar-h': `${Math.round(h * 100)}%`,
-                      '--bar-delay': `${(i * 0.06).toFixed(2)}s`,
-                    } as React.CSSProperties
-                  }
-                />
-              ))}
-            </div>
-
-            <div
-              ref={scrubRef}
-              className="music-progress-hitbox"
-              role="slider"
-              tabIndex={0}
-              aria-label="Позиция трека"
-              aria-valuemin={0}
-              aria-valuemax={Math.round(duration)}
-              aria-valuenow={Math.round(currentTime)}
-              onPointerDown={handleScrubPointerDown}
-              onPointerMove={handleScrubPointerMove}
-              onPointerUp={handleScrubPointerEnd}
-              onPointerCancel={handleScrubPointerEnd}
-            >
-              <div className="music-progress-track">
-                <div className="music-progress-fill" style={{ width: `${progress}%` }} />
-              </div>
-            </div>
-
-            <div className="music-time-row tabular-nums">
-              <span>{formatTime(currentTime)}</span>
-              <span>{formatTime(duration)}</span>
-            </div>
-          </div>
-        </motion.div>
-      </div>
+      <div className="container">{widget}</div>
     </section>
   );
 }

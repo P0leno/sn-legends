@@ -72,7 +72,7 @@ export function ProjectsSection() {
                   <GlassButton
                     type="button"
                     size="sm"
-                    contentClassName="flex items-center gap-2"
+                    contentClassName="flex items-center justify-center gap-2"
                     onClick={() => window.open(project.links.demo, '_blank', 'noopener,noreferrer')}
                   >
                     <span>Открыть @quarkgiftbot</span>
@@ -84,7 +84,7 @@ export function ProjectsSection() {
                   <GlassButton
                     type="button"
                     size="sm"
-                    contentClassName="flex items-center gap-2"
+                    contentClassName="flex items-center justify-center gap-2"
                     onClick={() => window.open(project.links.channel, '_blank', 'noopener,noreferrer')}
                   >
                     <span>Канал @quarkgift</span>
@@ -96,7 +96,7 @@ export function ProjectsSection() {
           </div>
         </motion.article>
 
-        {/* Open Showcase Bento Strip (4 QUARK nodes) */}
+        {/* Open Showcase Bento Grid (3 square 1:1 QUARK nodes) */}
         <div className="quark-nodes-track" role="region" aria-label="Компоненты экосистемы QUARK">
           <div className="quark-nodes-grid">
             {QUARK_NODES.map((node, idx) => (

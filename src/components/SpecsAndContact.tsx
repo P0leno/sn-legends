@@ -14,16 +14,16 @@ export function SpecsAndContact() {
       <section id="contact" className="contact-section">
         <div className="container">
           <motion.div
-            className="contact-card"
-            initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20, scale: 0.98 }}
-            whileInView={{ opacity: 1, y: 0, scale: 1 }}
-            viewport={{ once: true, amount: 0.3 }}
+            className="contact-dock"
+            initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.35 }}
             transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
           >
             <div className="contact-copy">
-              <h2 className="type-section contact-title">Связь</h2>
+              <h2 className="type-section contact-title">Написать в Telegram</h2>
               <p className="type-body contact-lead">
-                По вопросам QUARK, QuarkApp и сотрудничества в Telegram.
+                По вопросам QUARK, QuarkApp и сотрудничества — напрямую в Telegram.
               </p>
             </div>
 
@@ -31,7 +31,7 @@ export function SpecsAndContact() {
               <GlassButton
                 type="button"
                 size="default"
-                contentClassName="flex items-center gap-2"
+                contentClassName="flex items-center justify-center gap-2"
                 onClick={() => window.open(PROFILE.telegram, '_blank', 'noopener,noreferrer')}
               >
                 <Send size={16} strokeWidth={2} />
@@ -41,7 +41,7 @@ export function SpecsAndContact() {
               <GlassButton
                 type="button"
                 size="default"
-                contentClassName="flex items-center gap-2"
+                contentClassName="flex items-center justify-center gap-2"
                 onClick={() => window.open(PROFILE.quarkBot, '_blank', 'noopener,noreferrer')}
               >
                 <Bot size={16} strokeWidth={1.8} />
@@ -51,7 +51,7 @@ export function SpecsAndContact() {
               <GlassButton
                 type="button"
                 size="default"
-                contentClassName="flex items-center gap-2"
+                contentClassName="flex items-center justify-center gap-2"
                 onClick={() => window.open(PROFILE.quarkChannel, '_blank', 'noopener,noreferrer')}
               >
                 <Megaphone size={16} strokeWidth={1.8} />

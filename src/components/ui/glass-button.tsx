@@ -72,11 +72,11 @@ const glassButtonStyles = `@property --angle-1 { syntax: "<angle>"; inherits: fa
 
 .glass-button {
   -webkit-tap-highlight-color:transparent;
-  -webkit-backdrop-filter:blur(clamp(1px,.125em,4px));
-  backdrop-filter:blur(clamp(1px,.125em,4px));
-  transition:all var(--anim-time)var(--anim-ease);
-  background:linear-gradient(-75deg,oklch(from var(--background)l c h/5%),oklch(from var(--background)l c h/20%),oklch(from var(--background)l c h/5%));
-  box-shadow:inset 0 .125em .125em oklch(from var(--foreground)l c h/5%),inset 0 -.125em .125em oklch(from var(--background)l c h/50%),0 .25em .125em -.125em oklch(from var(--foreground)l c h/20%),0 0 .1em .25em inset oklch(from var(--background)l c h/20%),0 0 oklch(from var(--background)l c h)
+  -webkit-backdrop-filter:blur(clamp(8px,.5em,16px));
+  backdrop-filter:blur(clamp(8px,.5em,16px));
+  transition:transform var(--anim-time)var(--anim-ease), box-shadow var(--anim-time)var(--anim-ease), background-color var(--anim-time)var(--anim-ease);
+  background:rgba(22, 38, 28, 0.78);
+  box-shadow:inset 0 1px 0 rgba(226, 250, 235, 0.24), inset 0 -1px 0 rgba(0, 0, 0, 0.45), 0 12px 24px -10px rgba(0, 0, 0, 0.65);
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -212,7 +212,7 @@ const glassButtonStyles = `@property --angle-1 { syntax: "<angle>"; inherits: fa
 `;
 
 const glassButtonVariants = cva(
-  "relative isolate all-unset cursor-pointer rounded-full transition-all",
+  "relative isolate inline-flex items-center justify-center cursor-pointer rounded-full transition-transform",
   {
     variants: {
       size: {
@@ -229,7 +229,7 @@ const glassButtonVariants = cva(
 );
 
 const glassButtonTextVariants = cva(
-  "glass-button-text relative block select-none tracking-tighter",
+  "glass-button-text relative inline-flex items-center justify-center w-full select-none tracking-tight",
   {
     variants: {
       size: {
