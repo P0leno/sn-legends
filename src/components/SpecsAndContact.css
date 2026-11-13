@@ -1,14 +1,55 @@
 .contact-section {
-  padding-block: clamp(36px, 5vw, 60px);
+  padding-block: clamp(32px, 5vw, 60px);
 }
 
-.contact-dock {
+.contact-banner-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(130, 230, 170, 0.28);
+  background-color: var(--bg-surface-1);
+}
+
+.contact-banner-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  filter: brightness(0.75) saturate(1.25);
+  pointer-events: none;
+}
+
+.contact-banner-scrim {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(75% 80% at 50% 45%, rgba(12, 34, 21, 0.56) 0%, rgba(7, 20, 13, 0.88) 100%);
+  pointer-events: none;
+}
+
+.contact-banner-inner {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: 22px;
-  padding-block: clamp(12px, 2.5vw, 24px);
+  gap: 20px;
+  padding: clamp(30px, 5vw, 52px) clamp(20px, 4vw, 40px);
+}
+
+.contact-brand-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--accent-bright);
+  background-color: rgba(14, 34, 22, 0.78);
+  border: 1px solid rgba(94, 240, 155, 0.34);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
 }
 
 .contact-copy {
@@ -28,6 +69,7 @@
   max-width: 44ch;
   font-size: 1rem;
   line-height: 1.6;
+  color: #deefe5;
 }
 
 .contact-actions {
@@ -46,7 +88,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  padding-top: 16px;
+  padding-top: 12px;
   font-size: 0.875rem;
   color: var(--text-secondary);
 }

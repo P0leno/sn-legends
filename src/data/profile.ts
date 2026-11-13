@@ -22,6 +22,16 @@ export interface QuarkNodeItem {
   id: string;
   title: string;
   subtitle: string;
+  badge: string;
+  ctaLabel: string;
+  image: string;
+  href: string;
+}
+
+export interface QuarkModuleItem {
+  id: string;
+  title: string;
+  subtitle: string;
   image: string;
   href: string;
 }
@@ -63,11 +73,37 @@ export const FEATURED_TRACK: TrackItem = {
   cover: './assets/music/8-milya-cover.jpg',
 };
 
+export const QUARK_MODULES: QuarkModuleItem[] = [
+  {
+    id: 'module-menu',
+    title: 'Меню',
+    subtitle: 'Быстрый выбор игровых режимов, раунды на подарки и актуальные пулы.',
+    image: './assets/quark/quark-menu.jpg',
+    href: 'https://t.me/quarkgiftbot',
+  },
+  {
+    id: 'module-profile',
+    title: 'Профиль',
+    subtitle: 'Инвентарь Telegram Gifts, баланс, история раундов и реферальные бонусы.',
+    image: './assets/quark/quark-profile.jpg',
+    href: 'https://t.me/quarkgiftbot',
+  },
+  {
+    id: 'module-help',
+    title: 'Поддержка',
+    subtitle: 'Прямая связь с командой QUARK и помощь по депозитам и выводу 24/7.',
+    image: './assets/quark/quark-help.jpg',
+    href: 'https://t.me/quarkgiftbot',
+  },
+];
+
 export const QUARK_NODES: QuarkNodeItem[] = [
   {
     id: 'quark-bot',
     title: '@quarkgiftbot',
     subtitle: 'Бот для депозитов, вывода Telegram Gifts и быстрого входа в QuarkApp.',
+    badge: 'Telegram Bot',
+    ctaLabel: 'Запустить бота',
     image: './assets/quark/quark-bot.jpg',
     href: 'https://t.me/quarkgiftbot',
   },
@@ -75,6 +111,8 @@ export const QUARK_NODES: QuarkNodeItem[] = [
     id: 'quark-channel',
     title: '@quarkgift',
     subtitle: 'Основной канал с релизами, раздачами подарков и новостями платформы.',
+    badge: 'Telegram Channel',
+    ctaLabel: 'Открыть канал',
     image: './assets/quark/quark-channel.jpg',
     href: 'https://t.me/quarkgift',
   },
@@ -82,6 +120,8 @@ export const QUARK_NODES: QuarkNodeItem[] = [
     id: 'quark-support',
     title: 'Support',
     subtitle: 'Прямая поддержка игроков и помощь по любым операциям с подарками.',
+    badge: 'Support 24/7',
+    ctaLabel: 'Написать в саппорт',
     image: './assets/quark/quark-support.jpg',
     href: 'https://t.me/quarkgiftbot',
   },

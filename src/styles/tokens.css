@@ -1,31 +1,31 @@
 :root {
   /* Semantic Theme Tokens for GlassButton & shadcn */
-  --background: #040505;
-  --foreground: #f4f6f4;
+  --background: #07140d;
+  --foreground: #f4fbf6;
 
-  /* True Black Canvas & Obsidian Surfaces */
-  --bg-canvas: #040505;
-  --bg-surface-1: #0a0c0b;
-  --bg-surface-2: #111513;
-  --bg-surface-3: #171d19;
+  /* Sunlit Deep Forest Emerald Surfaces */
+  --bg-canvas: #07140d;
+  --bg-surface-1: #0e2216;
+  --bg-surface-2: #153120;
+  --bg-surface-3: #1d402b;
 
   /* Frosted Glass Materials */
-  --glass-bg: rgba(11, 14, 12, 0.72);
-  --glass-bg-elevated: rgba(16, 20, 17, 0.84);
-  --glass-pill: rgba(34, 48, 39, 0.52);
-  --glass-border: rgba(210, 240, 222, 0.11);
-  --glass-highlight: rgba(226, 250, 235, 0.2);
+  --glass-bg: rgba(14, 34, 22, 0.76);
+  --glass-bg-elevated: rgba(20, 46, 30, 0.86);
+  --glass-pill: rgba(38, 78, 52, 0.62);
+  --glass-border: rgba(160, 240, 192, 0.22);
+  --glass-highlight: rgba(210, 255, 228, 0.28);
 
   /* Text Hierarchy */
-  --text-primary: #f4f6f4;
-  --text-secondary: #98a89d;
-  --text-tertiary: #627066;
+  --text-primary: #f4fbf6;
+  --text-secondary: #b8d4c2;
+  --text-tertiary: #7fa38c;
 
-  /* Conifer Pine Green Accent (restrained, organic) */
-  --accent: #3eb472;
-  --accent-bright: #5ad490;
-  --accent-soft: rgba(62, 180, 114, 0.13);
-  --accent-border: rgba(62, 180, 114, 0.34);
+  /* Conifer Pine Green Accent (vivid emerald) */
+  --accent: #42c97c;
+  --accent-bright: #5ef09b;
+  --accent-soft: rgba(94, 240, 155, 0.18);
+  --accent-border: rgba(94, 240, 155, 0.44);
 
   /* Typography */
   --font-display: "Unbounded", -apple-system, BlinkMacSystemFont, "Inter", system-ui, sans-serif;

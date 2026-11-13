@@ -14,6 +14,16 @@ const PINE_STREAK_ART: ArtRecipe = {
   veins: 0,
 };
 
+const EMERALD_CANOPY_ART: ArtRecipe = {
+  style: 'marble',
+  colors: ['#06170e', '#0d2e1b', '#1c5433', '#3ec978', '#123621', '#8ce6b0'],
+  scale: 0.85,
+  warp: 1.4,
+  angle: 0.35,
+  gloss: 0.22,
+  veins: 2,
+};
+
 const QUARK_FILES: FolderFile[] = [
   {
     name: '@quarkgiftbot',
@@ -26,6 +36,27 @@ const QUARK_FILES: FolderFile[] = [
     meta: 'Telegram Channel',
     image: './assets/quark/quark-channel.jpg',
     href: PROFILE.quarkChannel,
+  },
+];
+
+const QUARKAPP_FILES: FolderFile[] = [
+  {
+    name: 'Меню',
+    meta: 'Игровые режимы · QuarkApp',
+    image: './assets/quark/quark-menu.jpg',
+    href: PROFILE.quarkBot,
+  },
+  {
+    name: 'Профиль',
+    meta: 'Telegram Gifts и баланс',
+    image: './assets/quark/quark-profile.jpg',
+    href: PROFILE.quarkBot,
+  },
+  {
+    name: 'Поддержка',
+    meta: 'Помощь 24/7',
+    image: './assets/quark/quark-help.jpg',
+    href: PROFILE.quarkBot,
   },
 ];
 
@@ -105,14 +136,39 @@ export function FoldersSection() {
 
           <div className="folder-slot">
             <GlassFolder
+              label="QuarkApp"
+              tone="dark"
+              art={EMERALD_CANOPY_ART}
+              seed={21}
+              width={folderWidth}
+              action="more"
+              appearDelay={80}
+              files={QUARKAPP_FILES}
+              onFileSelect={(file) => {
+                if (file.href) window.open(file.href, '_blank', 'noopener,noreferrer');
+              }}
+              menu={[
+                {
+                  label: 'Открыть QuarkApp',
+                  onSelect: () => window.open(PROFILE.quarkBot, '_blank', 'noopener,noreferrer'),
+                },
+              ]}
+            />
+          </div>
+
+          <div className="folder-slot">
+            <GlassFolder
               label="Плейлист"
               tone="dark"
               art={PINE_STREAK_ART}
               seed={14}
               width={folderWidth}
               action="more"
-              appearDelay={120}
+              appearDelay={160}
               files={PLAYLIST_FILES}
+              onFileSelect={(file) => {
+                if (file.href) window.open(file.href, '_blank', 'noopener,noreferrer');
+              }}
               menu={[
                 {
                   label: 'Открыть SoundCloud',

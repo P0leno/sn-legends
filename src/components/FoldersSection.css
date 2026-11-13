@@ -1,5 +1,5 @@
 .folders-section {
-  padding-block: clamp(36px, 5vw, 64px);
+  padding-block: clamp(36px, 5vw, 68px);
 }
 
 .folders-track {
@@ -24,7 +24,7 @@
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  gap: clamp(20px, 3.5vw, 44px);
+  gap: clamp(20px, 3vw, 32px);
   padding-inline: var(--gutter);
 }
 
@@ -33,14 +33,7 @@
   scroll-snap-align: center;
 }
 
-@media (max-width: 960px) {
-  .folders-row {
-    justify-content: center;
-    gap: 24px;
-  }
-}
-
-@media (max-width: 640px) {
+@media (max-width: 1080px) {
   .folders-track {
     overflow-x: visible;
     padding-block: 16px 24px;
@@ -48,6 +41,14 @@
 
   .folders-row {
     width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 28px;
+  }
+}
+
+@media (max-width: 640px) {
+  .folders-row {
     flex-direction: column;
     align-items: center;
     gap: 28px;
