@@ -70,7 +70,7 @@ export function ProjectsSection() {
               {project.links.demo && (
                 <GlassButton
                   type="button"
-                  size="sm"
+                  size="default"
                   contentClassName="flex items-center justify-center gap-2"
                   onClick={() => window.open(project.links.demo, '_blank', 'noopener,noreferrer')}
                 >
@@ -82,7 +82,7 @@ export function ProjectsSection() {
               {project.links.channel && (
                 <GlassButton
                   type="button"
-                  size="sm"
+                  size="default"
                   contentClassName="flex items-center justify-center gap-2"
                   onClick={() => window.open(project.links.channel, '_blank', 'noopener,noreferrer')}
                 >

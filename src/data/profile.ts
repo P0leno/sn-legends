@@ -54,8 +54,7 @@ export const PROFILE = {
   location: 'Telegram, 2026',
   availability: '@sn_legends',
   heroTitle: 'сн легендс',
-  heroSubtitle:
-    'Создаю экосистему QUARK в Telegram: игровой мини-апп QuarkApp, бота @quarkgiftbot и канал @quarkgift.',
+  heroSubtitle: 'Создатель экосистемы QUARK в Telegram',
   telegram: 'https://t.me/sn_legends',
   quarkBot: 'https://t.me/quarkgiftbot',
   quarkChannel: 'https://t.me/quarkgift',

@@ -8,8 +8,6 @@ import {
   useTransform,
   type MotionValue,
 } from 'motion/react';
-import { ArrowDownRight, ArrowUpRight, Send } from 'lucide-react';
-import { GlassButton } from '@/components/ui/glass-button';
 import { MusicPlayer } from './MusicPlayer';
 import { QuarkLogo } from './QuarkLogo';
 import { PROFILE } from '../data/profile';
@@ -20,13 +18,13 @@ interface GiftNode {
   name: string;
   src: string;
   desktopPos: { top: string; left?: string; right?: string };
+  mobilePos?: { top?: string; bottom?: string; left?: string; right?: string };
   size: number;
   floatVariant: 'a' | 'b';
   floatDuration: number;
   floatDelay: number;
   depth: number;
   rotate: number;
-  mobileArcOffset?: number;
   mobileVisible?: boolean;
 }
 
@@ -36,13 +34,13 @@ const FLOATING_GIFTS: GiftNode[] = [
     name: 'Plush Pepe',
     src: 'https://cdn.changes.tg/gifts/models/Plush%20Pepe/png/Original.png',
     desktopPos: { top: '14%', left: '8%' },
+    mobilePos: { top: '12%', left: '5%' },
     size: 136,
     floatVariant: 'a',
     floatDuration: 6.2,
     floatDelay: 0,
     depth: 24,
     rotate: -9,
-    mobileArcOffset: 10,
     mobileVisible: true,
   },
   {
@@ -50,13 +48,13 @@ const FLOATING_GIFTS: GiftNode[] = [
     name: "Durov's Cap",
     src: "https://cdn.changes.tg/gifts/models/Durov's%20Cap/png/Original.png",
     desktopPos: { top: '14%', right: '9%' },
+    mobilePos: { top: '13%', right: '5%' },
     size: 114,
     floatVariant: 'b',
     floatDuration: 7.0,
     floatDelay: -1.6,
     depth: 18,
     rotate: 8,
-    mobileArcOffset: 2,
     mobileVisible: true,
   },
   {
@@ -76,13 +74,13 @@ const FLOATING_GIFTS: GiftNode[] = [
     name: 'Kissed Frog',
     src: 'https://cdn.changes.tg/gifts/models/Kissed%20Frog/png/Original.png',
     desktopPos: { top: '42%', right: '7%' },
+    mobilePos: { bottom: '10%', left: '6%' },
     size: 132,
     floatVariant: 'a',
     floatDuration: 7.4,
     floatDelay: -0.9,
     depth: 24,
     rotate: 8,
-    mobileArcOffset: -6,
     mobileVisible: true,
   },
   {
@@ -102,13 +100,13 @@ const FLOATING_GIFTS: GiftNode[] = [
     name: 'Scared Cat',
     src: 'https://cdn.changes.tg/gifts/models/Scared%20Cat/png/Original.png',
     desktopPos: { top: '69%', right: '11%' },
+    mobilePos: { bottom: '11%', right: '6%' },
     size: 108,
     floatVariant: 'a',
     floatDuration: 6.1,
     floatDelay: -1.8,
     depth: 18,
     rotate: -6,
-    mobileArcOffset: 2,
     mobileVisible: true,
   },
   {
@@ -122,8 +120,6 @@ const FLOATING_GIFTS: GiftNode[] = [
     floatDelay: -1.2,
     depth: 14,
     rotate: -7,
-    mobileArcOffset: 10,
-    mobileVisible: true,
   },
   {
     id: 'astral-shard',
@@ -161,7 +157,10 @@ function FloatingGiftItem({
     '--desk-top': gift.desktopPos.top,
     '--desk-left': gift.desktopPos.left ?? 'auto',
     '--desk-right': gift.desktopPos.right ?? 'auto',
-    '--mob-arc-y': `${gift.mobileArcOffset ?? 0}px`,
+    '--mob-top': gift.mobilePos?.top ?? 'auto',
+    '--mob-bottom': gift.mobilePos?.bottom ?? 'auto',
+    '--mob-left': gift.mobilePos?.left ?? 'auto',
+    '--mob-right': gift.mobilePos?.right ?? 'auto',
   } as React.CSSProperties;
 
   return (
@@ -261,22 +260,16 @@ export function Hero() {
         <div className="hero-topbar">
           <a href="#overview" className="topbar-brand tactile">
             <QuarkLogo size={24} />
-            <span className="topbar-wordmark">{PROFILE.name}</span>
+            <span className="topbar-wordmark">Quark</span>
           </a>
 
-          <nav className="topbar-nav" aria-label="Навигация по странице">
-            <a href="#projects" className="topbar-link">QUARK</a>
-            <a href="#contact" className="topbar-link">Telegram</a>
-          </nav>
-
           <a
-            href={PROFILE.quarkBot}
+            href={PROFILE.quarkChannel}
             target="_blank"
             rel="noopener noreferrer"
             className="topbar-bot-cta tactile"
           >
-            <span>@quarkgiftbot</span>
-            <ArrowUpRight size={15} strokeWidth={2.2} />
+            <span>@quarkgift</span>
           </a>
         </div>
       </header>
@@ -329,37 +322,6 @@ export function Hero() {
         >
           {PROFILE.heroSubtitle}
         </motion.p>
-
-        <motion.div
-          className="hero-actions"
-          initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 14 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{
-            duration: 0.5,
-            delay: shouldReduceMotion ? 0 : 0.18,
-            ease: [0.23, 1, 0.32, 1],
-          }}
-        >
-          <GlassButton
-            type="button"
-            size="default"
-            contentClassName="flex items-center justify-center gap-2"
-            onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
-          >
-            <span>Смотреть QUARK</span>
-            <ArrowDownRight size={17} strokeWidth={2} />
-          </GlassButton>
-
-          <a
-            href={PROFILE.telegram}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hero-handle-link tactile"
-          >
-            <Send size={15} strokeWidth={2} />
-            <span>{PROFILE.handle}</span>
-          </a>
-        </motion.div>
 
         <MusicPlayer embedded />
       </motion.div>
