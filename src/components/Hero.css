@@ -28,29 +28,26 @@
 .topbar-brand {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
   min-width: 0;
 }
 
-.topbar-wordmark {
-  font-family: var(--font-display);
-  font-size: 1.125rem;
-  font-weight: 700;
-  letter-spacing: -0.015em;
-  color: var(--text-primary);
-  white-space: nowrap;
+.topbar-wordmark-img {
+  display: block;
+  height: 28px;
+  width: auto;
+  object-fit: contain;
+  user-select: none;
 }
 
 /* Crisp Sunlit Forest Backdrop */
 .hero-bg-forest {
   position: absolute;
-  inset: -4% 0 0 0;
+  inset: 0;
   height: 100%;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   filter: brightness(0.92) contrast(1.06) saturate(1.26);
-  will-change: transform;
   pointer-events: none;
   z-index: 0;
 }
@@ -111,7 +108,8 @@
   top: var(--desk-top, auto);
   left: var(--desk-left, auto);
   right: var(--desk-right, auto);
-  pointer-events: auto;
+  pointer-events: none;
+  user-select: none;
 }
 
 .gift-parallax {

@@ -1,16 +1,12 @@
-import { useRef } from 'react';
 import {
   motion,
   useMotionValue,
   useReducedMotion,
-  useScroll,
   useSpring,
   useTransform,
   type MotionValue,
 } from 'motion/react';
-import { GlassButton } from '@/components/ui/glass-button';
 import { MusicPlayer } from './MusicPlayer';
-import { QuarkLogo } from './QuarkLogo';
 import { PROFILE } from '../data/profile';
 import './Hero.css';
 
@@ -188,11 +184,8 @@ function FloatingGiftItem({
       }}
     >
       <motion.div className="gift-parallax" style={{ x, y }}>
-        <motion.div
+        <div
           className={`gift-sprite gift-float-${gift.floatVariant}`}
-          whileHover={shouldReduceMotion ? undefined : { scale: 1.12, rotate: 0 }}
-          whileTap={shouldReduceMotion ? undefined : { scale: 0.94 }}
-          transition={{ type: 'spring', stiffness: 360, damping: 24 }}
           style={
             {
               width: gift.size,
@@ -206,36 +199,24 @@ function FloatingGiftItem({
         >
           <img
             src={gift.src}
-            alt={gift.name}
+            alt=""
             className="gift-img"
             loading="eager"
             draggable={false}
           />
-        </motion.div>
+        </div>
       </motion.div>
     </motion.div>
   );
 }
 
 export function Hero() {
-  const sectionRef = useRef<HTMLElement>(null);
   const shouldReduceMotion = Boolean(useReducedMotion());
 
   const rawX = useMotionValue(0);
   const rawY = useMotionValue(0);
   const springX = useSpring(rawX, { stiffness: 110, damping: 18, mass: 0.8 });
   const springY = useSpring(rawY, { stiffness: 110, damping: 18, mass: 0.8 });
-
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ['start start', 'end start'],
-  });
-
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.96]);
-  const opacity = useTransform(scrollYProgress, [0, 0.9], [1, 0.25]);
-  const y = useTransform(scrollYProgress, [0, 1], [0, 40]);
-  const bgY = useTransform(scrollYProgress, [0, 1], ['0%', '10%']);
-  const giftsY = useTransform(scrollYProgress, [0, 1], [0, -32]);
 
   const handlePointerMove = (e: React.PointerEvent<HTMLElement>) => {
     if (shouldReduceMotion || e.pointerType === 'touch') return;
@@ -252,17 +233,13 @@ export function Hero() {
   return (
     <section
       id="overview"
-      ref={sectionRef}
       className="hero-section"
       onPointerMove={handlePointerMove}
       onPointerLeave={handlePointerLeave}
     >
-      <motion.div
+      <div
         className="hero-bg-forest"
-        style={{
-          ...(shouldReduceMotion ? {} : { y: bgY }),
-          backgroundImage: `url('./assets/quark/forest-clean.jpg')`,
-        }}
+        style={{ backgroundImage: `url('./assets/quark/forest-clean.jpg')` }}
         aria-hidden="true"
       />
       <div className="hero-canopy-glow" aria-hidden="true" />
@@ -271,27 +248,25 @@ export function Hero() {
       {/* Unboxed Top Bar */}
       <header className="container hero-topbar-wrap">
         <div className="hero-topbar">
-          <a href="#overview" className="topbar-brand tactile">
-            <QuarkLogo size={24} />
-            <span className="topbar-wordmark">Quark</span>
-          </a>
-
-          <GlassButton
-            type="button"
-            size="sm"
-            onClick={() => window.open(PROFILE.quarkChannel, '_blank', 'noopener,noreferrer')}
+          <a
+            href={PROFILE.quarkChannel}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="topbar-brand tactile"
+            aria-label="Канал Quark в Telegram (@quarkgift)"
           >
-            <span>@quarkgift</span>
-          </GlassButton>
+            <img
+              src="./assets/quark/quark-wordmark.png"
+              alt="Quark"
+              className="topbar-wordmark-img"
+              draggable={false}
+            />
+          </a>
         </div>
       </header>
 
-      {/* Free-Floating 3D Gifts (No backing boxes) */}
-      <motion.div
-        className="hero-gifts-layer"
-        style={shouldReduceMotion ? undefined : { opacity, scale, y: giftsY }}
-        aria-hidden="true"
-      >
+      {/* Free-Floating 3D Gifts (Non-interactive) */}
+      <div className="hero-gifts-layer" aria-hidden="true">
         {FLOATING_GIFTS.map((gift, idx) => (
           <FloatingGiftItem
             key={gift.id}
@@ -302,13 +277,10 @@ export function Hero() {
             shouldReduceMotion={shouldReduceMotion}
           />
         ))}
-      </motion.div>
+      </div>
 
       {/* Centered Focal Stack + Rebuilt Music Player */}
-      <motion.div
-        className="container hero-content"
-        style={shouldReduceMotion ? undefined : { scale, opacity, y }}
-      >
+      <div className="container hero-content">
         <motion.h1
           className="type-hero hero-title"
           initial={
@@ -336,7 +308,7 @@ export function Hero() {
         </motion.p>
 
         <MusicPlayer embedded />
-      </motion.div>
+      </div>
     </section>
   );
 }

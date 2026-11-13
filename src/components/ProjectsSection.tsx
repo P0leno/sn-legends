@@ -1,5 +1,4 @@
-import { useRef } from 'react';
-import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react';
+import { motion, useReducedMotion } from 'motion/react';
 import { ArrowUpRight } from 'lucide-react';
 import { PROJECTS, QUARK_NODES } from '../data/profile';
 import { GlassButton } from '@/components/ui/glass-button';
@@ -8,17 +7,7 @@ import './ProjectsSection.css';
 
 export function ProjectsSection() {
   const shouldReduceMotion = useReducedMotion();
-  const cardRef = useRef<HTMLDivElement>(null);
   const project = PROJECTS[0];
-
-  const { scrollYProgress } = useScroll({
-    target: cardRef,
-    offset: ['start end', 'center center'],
-  });
-
-  const scale = useTransform(scrollYProgress, [0, 1], [0.97, 1]);
-  const y = useTransform(scrollYProgress, [0, 1], [22, 0]);
-  const opacity = useTransform(scrollYProgress, [0, 0.7], [0.45, 1]);
 
   return (
     <section id="projects" className="projects-section">
@@ -36,9 +25,11 @@ export function ProjectsSection() {
 
         {/* Unboxed Featured Split Showcase */}
         <motion.article
-          ref={cardRef}
           className="project-featured-split"
-          style={shouldReduceMotion ? undefined : { scale, y, opacity }}
+          initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 18 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
         >
           <a
             href={project.links.demo}
