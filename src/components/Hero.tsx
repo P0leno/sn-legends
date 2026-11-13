@@ -8,6 +8,7 @@ import {
   useTransform,
   type MotionValue,
 } from 'motion/react';
+import { GlassButton } from '@/components/ui/glass-button';
 import { MusicPlayer } from './MusicPlayer';
 import { QuarkLogo } from './QuarkLogo';
 import { PROFILE } from '../data/profile';
@@ -275,14 +276,13 @@ export function Hero() {
             <span className="topbar-wordmark">Quark</span>
           </a>
 
-          <a
-            href={PROFILE.quarkChannel}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="topbar-bot-cta tactile"
+          <GlassButton
+            type="button"
+            size="sm"
+            onClick={() => window.open(PROFILE.quarkChannel, '_blank', 'noopener,noreferrer')}
           >
             <span>@quarkgift</span>
-          </a>
+          </GlassButton>
         </div>
       </header>
 

@@ -41,32 +41,6 @@
   white-space: nowrap;
 }
 
-.topbar-bot-cta {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  height: 36px;
-  padding: 0 16px;
-  border-radius: 999px;
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: var(--text-primary);
-  background-color: rgba(7, 20, 13, 0.32);
-  border: 1.5px solid rgba(255, 255, 255, 0.78);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  white-space: nowrap;
-  flex-shrink: 0;
-  transition: background-color 180ms ease, border-color 180ms ease;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .topbar-bot-cta:hover {
-    background-color: rgba(94, 240, 155, 0.16);
-    border-color: var(--accent-bright);
-  }
-}
-
 /* Crisp Sunlit Forest Backdrop */
 .hero-bg-forest {
   position: absolute;
