@@ -1,64 +1,59 @@
-import { motion, useReducedMotion } from 'motion/react';
-import { SFGiftIcon, SFMegaphoneIcon, SFPaperplaneIcon } from '@/components/ui/sf-icons';
-import { GlassButton } from '@/components/ui/glass-button';
+import { SFArrowUpRightIcon } from '@/components/ui/sf-icons';
 import { PROFILE } from '../data/profile';
 import './SpecsAndContact.css';
 
 const CURRENT_YEAR = new Date().getFullYear();
 
-export function SpecsAndContact() {
-  const shouldReduceMotion = useReducedMotion();
+const CONTACT_DIRECTORY = [
+  {
+    id: 'tg-personal',
+    label: PROFILE.handle,
+    role: 'Личный Telegram',
+    href: PROFILE.telegram,
+  },
+  {
+    id: 'tg-bot',
+    label: '@quarkgiftbot',
+    role: 'Бот и Mini App',
+    href: PROFILE.quarkBot,
+  },
+  {
+    id: 'tg-channel',
+    label: '@quarkgift',
+    role: 'Канал и новости',
+    href: PROFILE.quarkChannel,
+  },
+];
 
+export function SpecsAndContact() {
   return (
     <>
       <section id="contact" className="contact-section">
         <div className="container">
-          <motion.div
-            className="contact-open-block"
-            initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 18 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.35 }}
-            transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
-          >
-            <div className="contact-copy">
-              <h2 className="type-section contact-title">Связь в Telegram</h2>
+          <div className="contact-split">
+            <div className="contact-intro">
+              <h2 className="type-section contact-title">Связь</h2>
               <p className="type-body contact-lead">
-                По вопросам QUARK, QuarkApp и сотрудничества — напрямую в Telegram.
+                По вопросам QUARK, QuarkApp и совместных проектов — напрямую в Telegram.
               </p>
             </div>
 
-            <div className="contact-actions">
-              <GlassButton
-                type="button"
-                size="default"
-                contentClassName="flex items-center justify-center gap-2"
-                onClick={() => window.open(PROFILE.telegram, '_blank', 'noopener,noreferrer')}
-              >
-                <SFPaperplaneIcon size={15} />
-                <span>{PROFILE.handle}</span>
-              </GlassButton>
-
-              <GlassButton
-                type="button"
-                size="default"
-                contentClassName="flex items-center justify-center gap-2"
-                onClick={() => window.open(PROFILE.quarkBot, '_blank', 'noopener,noreferrer')}
-              >
-                <SFGiftIcon size={15} />
-                <span>@quarkgiftbot</span>
-              </GlassButton>
-
-              <GlassButton
-                type="button"
-                size="default"
-                contentClassName="flex items-center justify-center gap-2"
-                onClick={() => window.open(PROFILE.quarkChannel, '_blank', 'noopener,noreferrer')}
-              >
-                <SFMegaphoneIcon size={15} />
-                <span>@quarkgift</span>
-              </GlassButton>
+            <div className="contact-directory">
+              {CONTACT_DIRECTORY.map((item) => (
+                <a
+                  key={item.id}
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="contact-dir-item tactile"
+                >
+                  <span className="contact-dir-handle">{item.label}</span>
+                  <span className="contact-dir-role">{item.role}</span>
+                  <SFArrowUpRightIcon size={16} className="contact-dir-arrow" />
+                </a>
+              ))}
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
 
@@ -67,14 +62,7 @@ export function SpecsAndContact() {
           <span className="footer-copy tabular-nums">
             © {CURRENT_YEAR} {PROFILE.name}
           </span>
-          <a
-            href={PROFILE.telegram}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="footer-meta tactile"
-          >
-            {PROFILE.handle}
-          </a>
+          <span className="footer-meta">QUARK · Telegram</span>
         </div>
       </footer>
     </>

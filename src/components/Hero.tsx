@@ -61,7 +61,7 @@ const FLOATING_GIFTS: GiftNode[] = [
     id: 'magic-potion',
     name: 'Magic Potion',
     src: 'https://cdn.changes.tg/gifts/models/Magic%20Potion/png/Original.png',
-    desktopPos: { top: '48%', left: '4%' },
+    desktopPos: { top: '48%', left: '5%' },
     size: 98,
     floatVariant: 'b',
     floatDuration: 6.8,
@@ -116,9 +116,9 @@ const FLOATING_GIFTS: GiftNode[] = [
     name: 'Loot Bag',
     src: 'https://cdn.changes.tg/gifts/models/Loot%20Bag/png/Original.png',
     desktopPos: { top: '31%', left: '21%' },
-    mobilePos: { top: '27%', left: '19%' },
+    mobilePos: { top: '20%', left: '16%' },
     size: 88,
-    mobileSize: 42,
+    mobileSize: 38,
     floatVariant: 'a',
     floatDuration: 6.9,
     floatDelay: -1.2,
@@ -130,10 +130,10 @@ const FLOATING_GIFTS: GiftNode[] = [
     id: 'astral-shard',
     name: 'Astral Shard',
     src: 'https://cdn.changes.tg/gifts/models/Astral%20Shard/png/Original.png',
-    desktopPos: { top: '79%', right: '6%' },
-    mobilePos: { bottom: '28%', right: '13%' },
+    desktopPos: { top: '79%', right: '5%' },
+    mobilePos: { bottom: '20%', right: '9%' },
     size: 112,
-    mobileSize: 46,
+    mobileSize: 42,
     floatVariant: 'b',
     floatDuration: 7.2,
     floatDelay: -2.1,
@@ -242,7 +242,6 @@ export function Hero() {
         style={{ backgroundImage: `url('./assets/quark/forest-clean.jpg')` }}
         aria-hidden="true"
       />
-      <div className="hero-canopy-glow" aria-hidden="true" />
       <div className="hero-bg-vignette" aria-hidden="true" />
 
       {/* Unboxed Top Bar */}
@@ -283,13 +282,9 @@ export function Hero() {
       <div className="container hero-content">
         <motion.h1
           className="type-hero hero-title"
-          initial={
-            shouldReduceMotion
-              ? { opacity: 0 }
-              : { opacity: 0, y: 18, filter: 'blur(8px)' }
-          }
-          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-          transition={{ duration: 0.6, delay: shouldReduceMotion ? 0 : 0.05, ease: [0.23, 1, 0.32, 1] }}
+          initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.45, delay: shouldReduceMotion ? 0 : 0.04, ease: [0.23, 1, 0.32, 1] }}
         >
           {PROFILE.heroTitle}
         </motion.h1>

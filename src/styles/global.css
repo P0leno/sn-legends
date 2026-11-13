@@ -31,22 +31,16 @@ html {
 body {
   margin: 0;
   background-color: var(--bg-canvas);
-  background-image:
-    radial-gradient(60% 45% at 50% 0%, rgba(52, 168, 98, 0.28), transparent 70%),
-    radial-gradient(50% 40% at 15% 35%, rgba(42, 138, 82, 0.22), transparent 72%),
-    radial-gradient(50% 42% at 85% 70%, rgba(36, 124, 74, 0.2), transparent 72%);
-  background-attachment: fixed;
   color: var(--text-primary);
   overscroll-behavior: none;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 ::selection {
-  background-color: rgba(62, 180, 114, 0.3);
+  background-color: rgba(94, 240, 155, 0.28);
   color: var(--text-primary);
 }
 
-/* Custom scrollbar matching dark conifer palette */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -57,13 +51,13 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(152, 168, 157, 0.22);
+  background: rgba(182, 196, 186, 0.2);
   border-radius: 999px;
 }
 
 @media (hover: hover) and (pointer: fine) {
   ::-webkit-scrollbar-thumb:hover {
-    background: rgba(62, 180, 114, 0.45);
+    background: rgba(94, 240, 155, 0.42);
   }
 }
 
@@ -109,43 +103,85 @@ button {
   font-variant-numeric: tabular-nums;
 }
 
-/* Optical Typography */
+/* Crisp Editorial Typography */
 .type-hero {
   font-family: var(--font-display);
-  font-size: clamp(2.15rem, 6.5vw, 4.75rem);
-  font-weight: 600;
-  line-height: 1.04;
-  letter-spacing: -0.03em;
+  font-size: clamp(2.5rem, 6.2vw, 4.75rem);
+  font-weight: 700;
+  line-height: 1.02;
+  letter-spacing: -0.035em;
   text-wrap: balance;
-  font-optical-sizing: auto;
 }
 
 .type-section {
   font-family: var(--font-display);
-  font-size: clamp(1.5rem, 3.6vw, 2.5rem);
-  font-weight: 600;
+  font-size: clamp(1.65rem, 3.2vw, 2.35rem);
+  font-weight: 700;
   line-height: 1.1;
   letter-spacing: -0.025em;
   text-wrap: balance;
-  font-optical-sizing: auto;
 }
 
 .type-card-title {
   font-family: var(--font-display);
-  font-size: clamp(1.1rem, 1.8vw, 1.4rem);
+  font-size: clamp(1.05rem, 1.5vw, 1.25rem);
   font-weight: 600;
-  line-height: 1.18;
+  line-height: 1.2;
   letter-spacing: -0.015em;
 }
 
 .type-body {
-  font-size: clamp(1rem, 1.2vw, 1.125rem);
+  font-size: clamp(1rem, 1.1vw, 1.125rem);
   line-height: 1.58;
-  letter-spacing: 0;
+  max-width: 58ch;
   color: var(--text-secondary);
 }
 
-/* Tactile Press Feedback */
+/* Unified Apple-style Pill Buttons (Zero glow/artifact bugs) */
+.ui-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 42px;
+  padding: 0 18px;
+  border-radius: 999px;
+  font-family: var(--font-sans);
+  font-size: 0.92rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  transition:
+    transform 120ms var(--ease-out),
+    background-color 180ms ease,
+    border-color 180ms ease,
+    color 180ms ease;
+}
+
+.ui-btn:active {
+  transform: scale(0.97);
+}
+
+.ui-btn--primary {
+  background-color: var(--text-primary);
+  color: #080c09;
+}
+
+.ui-btn--secondary {
+  background-color: var(--bg-surface-2);
+  color: var(--text-primary);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .ui-btn--primary:hover {
+    background-color: #ffffff;
+  }
+
+  .ui-btn--secondary:hover {
+    background-color: var(--bg-surface-3);
+  }
+}
+
 .tactile {
   transition:
     transform 120ms var(--ease-out),
@@ -158,27 +194,14 @@ button {
   transform: scale(0.97);
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .hover-lift {
-    transition:
-      transform 240ms var(--ease-out),
-      border-color 220ms ease,
-      background-color 220ms ease;
-  }
-
-  .hover-lift:hover {
-    transform: translateY(-3px);
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .tactile,
-  .hover-lift {
+  .ui-btn,
+  .tactile {
     transition: opacity 180ms ease, background-color 180ms ease, border-color 180ms ease;
   }
 
-  .tactile:active,
-  .hover-lift:hover {
+  .ui-btn:active,
+  .tactile:active {
     transform: none;
   }
 }

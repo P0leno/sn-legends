@@ -14,7 +14,7 @@ function formatTime(sec: number): string {
   const safe = Math.max(0, Math.floor(sec));
   const m = Math.floor(safe / 60);
   const s = safe % 60;
-  return `${m}:${s.toString().padStart(2, '0')}`;
+  return `${m}:${s < 10 ? `0${s}` : s}`;
 }
 
 export function MusicPlayer({ embedded = false }: { embedded?: boolean }) {
