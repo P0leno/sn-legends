@@ -1,12 +1,12 @@
 .projects-section {
-  padding-block: clamp(44px, 6vw, 76px);
+  padding-block: clamp(48px, 6.5vw, 84px);
 }
 
 .section-header {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  margin-bottom: clamp(20px, 3vw, 32px);
+  margin-bottom: clamp(24px, 3.5vw, 36px);
 }
 
 .section-title {
@@ -20,30 +20,21 @@
   max-width: 54ch;
 }
 
-.project-featured-card {
-  position: relative;
-  border-radius: var(--radius-lg);
-  background: linear-gradient(165deg, rgba(22, 52, 34, 0.88), rgba(12, 28, 19, 0.92));
-  border: 1px solid rgba(130, 230, 170, 0.24);
-  overflow: hidden;
-  will-change: transform, opacity;
-}
-
-.project-featured-grid {
+/* Unboxed 2-Column Split Showcase */
+.project-featured-split {
   display: grid;
-  grid-template-columns: 1.12fr 1fr;
+  grid-template-columns: 1.15fr 1fr;
   align-items: center;
-  gap: clamp(20px, 3.5vw, 40px);
-  padding: clamp(18px, 3vw, 28px);
+  gap: clamp(22px, 4vw, 48px);
+  will-change: transform, opacity;
 }
 
 .project-banner-link {
   display: block;
   width: 100%;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-lg);
   overflow: hidden;
-  background-color: var(--bg-surface-2);
-  border: 1px solid rgba(160, 240, 192, 0.2);
+  background-color: var(--bg-surface-1);
 }
 
 .project-visual-banner {
@@ -90,150 +81,37 @@
 .project-summary {
   margin: 2px 0 0;
   font-size: 1rem;
-  line-height: 1.58;
+  line-height: 1.62;
   color: var(--text-secondary);
-}
-
-.project-highlights {
-  list-style: none;
-  margin: 6px 0 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.project-highlight-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
-  font-size: 0.9375rem;
-  line-height: 1.42;
-  color: #e2f5e9;
-}
-
-.project-highlight-icon {
-  flex-shrink: 0;
-  margin-top: 2px;
-  color: var(--accent-bright);
 }
 
 .project-cta-row {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  margin-top: 12px;
+  margin-top: 14px;
 }
 
-/* Row 2: QuarkApp Modules (16:9 strip) */
-.quark-modules-block {
-  margin-top: 28px;
-}
-
-.quark-subhead {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 12px;
-  flex-wrap: wrap;
-  margin-bottom: 14px;
-}
-
-.quark-subhead-title {
-  margin: 0;
-  color: var(--text-primary);
-}
-
-.quark-subhead-note {
-  font-size: 0.9375rem;
-  color: var(--text-secondary);
-}
-
-.quark-modules-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 16px;
-}
-
-.quark-module-card {
-  display: flex;
-  flex-direction: column;
-  border-radius: var(--radius-md);
-  background: linear-gradient(165deg, rgba(22, 52, 34, 0.86), rgba(12, 28, 19, 0.92));
-  border: 1px solid rgba(130, 230, 170, 0.22);
-  overflow: hidden;
-  transition:
-    background-color 220ms ease,
-    border-color 220ms ease,
-    transform 140ms var(--ease-out);
-}
-
-.quark-module-media {
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  overflow: hidden;
-  background-color: var(--bg-surface-2);
-}
-
-.quark-module-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  transition: transform 420ms var(--ease-out);
-}
-
-.quark-module-body {
-  padding: 14px 16px 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .quark-module-card:hover {
-    border-color: var(--accent-border);
-  }
-
-  .quark-module-card:hover .quark-module-img {
-    transform: scale(1.04);
-  }
-
-  .quark-module-card:hover .quark-node-arrow {
-    color: var(--accent-bright);
-    transform: translate(2px, -2px);
-  }
-}
-
-/* Row 3: 3-card Square Showcase Grid */
-.quark-nodes-track {
-  margin-top: 20px;
-}
-
+/* Unboxed 3-Column Pillars */
 .quark-nodes-grid {
+  margin-top: clamp(32px, 4.5vw, 52px);
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 16px;
+  gap: clamp(18px, 2.5vw, 28px);
 }
 
-.quark-node-card {
+.quark-node-item {
   display: flex;
   flex-direction: column;
-  border-radius: var(--radius-md);
-  background: linear-gradient(165deg, rgba(22, 52, 34, 0.88), rgba(12, 28, 19, 0.92));
-  border: 1px solid rgba(130, 230, 170, 0.24);
-  overflow: hidden;
-  transition:
-    background-color 220ms ease,
-    border-color 220ms ease,
-    transform 140ms var(--ease-out);
+  gap: 14px;
 }
 
 .quark-node-media {
   width: 100%;
   aspect-ratio: 1 / 1;
+  border-radius: var(--radius-md);
   overflow: hidden;
-  background-color: var(--bg-surface-2);
+  background-color: var(--bg-surface-1);
 }
 
 .quark-node-img {
@@ -245,22 +123,9 @@
 }
 
 .quark-node-body {
-  padding: 16px 18px 18px;
   display: flex;
   flex-direction: column;
-  gap: 7px;
-  flex: 1;
-}
-
-.quark-node-badge {
-  align-self: flex-start;
-  padding: 3px 9px;
-  border-radius: 999px;
-  font-size: 0.8125rem;
-  font-weight: 500;
-  color: var(--accent-bright);
-  background-color: rgba(94, 240, 155, 0.14);
-  border: 1px solid rgba(94, 240, 155, 0.26);
+  gap: 6px;
 }
 
 .quark-node-head {
@@ -288,76 +153,50 @@
 .quark-node-subtitle {
   margin: 0;
   font-size: 0.9375rem;
-  line-height: 1.5;
+  line-height: 1.52;
   color: var(--text-secondary);
 }
 
-.quark-node-cta {
-  margin-top: auto;
-  padding-top: 6px;
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: var(--accent-bright);
-}
-
 @media (hover: hover) and (pointer: fine) {
-  .quark-node-card:hover {
-    border-color: var(--accent-border);
-  }
-
-  .quark-node-card:hover .quark-node-img {
+  .quark-node-item:hover .quark-node-img {
     transform: scale(1.04);
   }
 
-  .quark-node-card:hover .quark-node-arrow {
+  .quark-node-item:hover .quark-node-arrow {
     color: var(--accent-bright);
     transform: translate(2px, -2px);
   }
 }
 
 @media (max-width: 900px) {
-  .project-featured-grid {
+  .project-featured-split {
     grid-template-columns: 1fr;
-  }
-
-  .quark-modules-grid {
-    grid-template-columns: 1fr;
-    gap: 12px;
+    gap: 20px;
   }
 }
 
 @media (max-width: 768px) {
   .quark-nodes-grid {
     grid-template-columns: 1fr;
-    gap: 12px;
+    gap: 18px;
   }
 
-  .quark-node-card {
+  .quark-node-item {
     display: grid;
-    grid-template-columns: 92px minmax(0, 1fr);
+    grid-template-columns: 84px minmax(0, 1fr);
     align-items: center;
-    padding: 10px;
-    gap: 14px;
+    gap: 16px;
   }
 
   .quark-node-media {
-    width: 92px;
-    height: 92px;
+    width: 84px;
+    height: 84px;
     border-radius: var(--radius-sm);
     flex-shrink: 0;
   }
 
   .quark-node-body {
-    padding: 2px 4px 2px 0;
     min-width: 0;
-  }
-
-  .quark-node-badge,
-  .quark-node-cta {
-    display: none;
   }
 }
 
