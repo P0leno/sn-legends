@@ -6,21 +6,21 @@ import './FoldersSection.css';
 
 const PINE_STREAK_ART: ArtRecipe = {
   style: 'streak',
-  colors: ['#040505', '#0e1e14', '#224c33', '#3eb472', '#13241a', '#98a89d'],
+  colors: ['#080c09', '#0e1e14', '#224c33', '#38c977', '#13241a', '#b6c4ba'],
   scale: 0.72,
   warp: 1.5,
   angle: -0.45,
-  gloss: 0.24,
+  gloss: 0.22,
   veins: 0,
 };
 
 const EMERALD_CANOPY_ART: ArtRecipe = {
   style: 'marble',
-  colors: ['#06170e', '#0d2e1b', '#1c5433', '#3ec978', '#123621', '#8ce6b0'],
+  colors: ['#080c09', '#0d2e1b', '#1c5433', '#5ef09b', '#123621', '#b6c4ba'],
   scale: 0.85,
   warp: 1.4,
   angle: 0.35,
-  gloss: 0.22,
+  gloss: 0.2,
   veins: 2,
 };
 
@@ -72,40 +72,52 @@ const PLAYLIST_FILES: FolderFile[] = [
 
 export function FoldersSection() {
   const shouldReduceMotion = useReducedMotion();
-  const [isMobile, setIsMobile] = useState(false);
+  const [viewportMode, setViewportMode] = useState<'desktop' | 'tablet' | 'mobile'>('desktop');
 
   useEffect(() => {
-    const mq = window.matchMedia('(max-width: 560px)');
-    const update = () => setIsMobile(mq.matches);
+    const mobileMq = window.matchMedia('(max-width: 640px)');
+    const tabletMq = window.matchMedia('(max-width: 1024px)');
+    const update = () => {
+      if (mobileMq.matches) {
+        setViewportMode('mobile');
+      } else if (tabletMq.matches) {
+        setViewportMode('tablet');
+      } else {
+        setViewportMode('desktop');
+      }
+    };
     update();
-    mq.addEventListener('change', update);
-    return () => mq.removeEventListener('change', update);
+    mobileMq.addEventListener('change', update);
+    tabletMq.addEventListener('change', update);
+    return () => {
+      mobileMq.removeEventListener('change', update);
+      tabletMq.removeEventListener('change', update);
+    };
   }, []);
 
-  const folderWidth = isMobile ? 276 : 320;
+  const folderWidth =
+    viewportMode === 'mobile' ? 280 : viewportMode === 'tablet' ? 214 : 316;
 
   return (
-    <section id="folders" className="folders-section" aria-label="Архив">
+    <section id="folders" className="folders-section" aria-label="Папки">
       <div className="container">
-        <motion.div
-          className="section-header"
-          initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 18 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.35 }}
-          transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
-        >
-          <h2 className="type-section section-title">Архив</h2>
-        </motion.div>
+        <div className="folders-header">
+          <h2 className="type-section section-title">Папки</h2>
+          <p className="type-body section-lead">
+            Интерактивные разделы с быстрыми ссылками на QuarkApp, бота, канал и трек.
+          </p>
+        </div>
       </div>
 
       <motion.div
         className="folders-track"
+        data-ui
         role="region"
         aria-label="Стеклянные папки"
-        initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 24, scale: 0.98 }}
-        whileInView={{ opacity: 1, y: 0, scale: 1 }}
-        viewport={{ once: true, amount: 0.2 }}
-        transition={{ duration: 0.55, ease: [0.23, 1, 0.32, 1] }}
+        initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 14 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.15 }}
+        transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
       >
         <div className="folders-row">
           <div className="folder-slot">
