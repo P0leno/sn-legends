@@ -1,160 +1,298 @@
 .workspace-section {
-  padding-block: clamp(44px, 6vw, 84px) 0;
+  padding-block: clamp(44px, 6.5vw, 88px) 0;
 }
 
-.workspace-top {
+.app-showcase-grid {
   display: grid;
-  grid-template-columns: 0.9fr 1.25fr;
-  gap: clamp(24px, 4vw, 56px);
-  align-items: start;
-  margin-bottom: clamp(32px, 5vw, 52px);
+  grid-template-columns: minmax(300px, 360px) minmax(0, 1fr);
+  gap: clamp(28px, 4vw, 52px);
+  align-items: center;
 }
 
-.workspace-intro {
+.app-info-col {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  align-items: flex-start;
+  gap: 18px;
 }
 
-.workspace-title {
+.app-title {
   margin: 0;
-  font-size: clamp(2rem, 3.8vw, 3rem);
+  font-size: clamp(2rem, 3.6vw, 2.85rem);
   letter-spacing: -0.03em;
   line-height: 1.05;
   color: var(--text-primary);
 }
 
-.workspace-lead {
+.app-lead {
   margin: 0;
-  max-width: 32ch;
+  max-width: 34ch;
 }
 
-/* Direct Typographic Telegram Links (No SaaS chrome or hairline clutter) */
-.workspace-directory {
+/* Tactile Screen Switcher */
+.app-mode-list {
+  width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
 }
 
-.workspace-link-row {
-  display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr) auto;
-  align-items: center;
-  gap: 12px;
-  min-height: 50px;
+.app-mode-item {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
   padding: 12px 14px;
-  margin-inline: -14px;
-  border-radius: var(--radius-md);
+  border-radius: 14px;
+  text-align: left;
   background-color: transparent;
-  transition: background-color 180ms ease;
+  transition:
+    background-color 180ms ease,
+    box-shadow 180ms ease;
 }
 
-.workspace-link-handle {
-  font-family: var(--font-display);
-  font-size: 1.08rem;
-  font-weight: 600;
-  color: var(--text-primary);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  transition: color 180ms ease;
-}
-
-.workspace-link-note {
-  font-size: 0.98rem;
-  color: var(--text-secondary);
-}
-
-.workspace-link-arrow {
-  color: var(--text-tertiary);
-  transition: color 180ms ease, transform 180ms var(--ease-out);
+.app-mode-item.is-active {
+  background: rgba(255, 255, 255, 0.06);
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .workspace-link-row:hover {
-    background-color: var(--bg-surface-1);
-  }
-
-  .workspace-link-row:hover .workspace-link-handle {
-    color: var(--accent-bright);
-  }
-
-  .workspace-link-row:hover .workspace-link-arrow {
-    color: var(--accent-bright);
-    transform: translate(2px, -2px);
+  .app-mode-item:not(.is-active):hover {
+    background-color: rgba(255, 255, 255, 0.04);
   }
 }
 
-/* Integrated GlassFolder Row */
-.workspace-folders {
-  padding-block: 10px 28px;
+.app-mode-title {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--text-secondary);
+  transition: color 180ms ease;
 }
 
-.folders-row {
-  width: 100%;
+.app-mode-item.is-active .app-mode-title {
+  color: var(--accent-bright);
+}
+
+.app-mode-caption {
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: var(--text-tertiary);
+}
+
+.app-mode-item.is-active .app-mode-caption {
+  color: var(--text-secondary);
+}
+
+/* Unified Frosted Actions */
+.app-actions-row {
   display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 24px;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  padding-top: 4px;
 }
 
-.folder-slot {
-  flex: 0 0 auto;
+.app-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  height: 44px;
+  padding: 0 18px;
+  border-radius: 999px;
+  font-family: var(--font-sans);
+  font-size: 0.92rem;
+  font-weight: 600;
+  white-space: nowrap;
+  transition:
+    transform 120ms var(--ease-out),
+    background-color 180ms ease,
+    box-shadow 180ms ease;
 }
 
-/* Minimal Single-Line Footer */
+.app-btn:active {
+  transform: scale(0.97);
+}
+
+.app-btn--primary {
+  background-color: var(--text-primary);
+  color: #080c09;
+}
+
+.app-btn--glass {
+  background-color: rgba(255, 255, 255, 0.09);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  color: var(--text-primary);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .app-btn--primary:hover {
+    background-color: var(--accent-bright);
+  }
+
+  .app-btn--glass:hover {
+    background: rgba(255, 255, 255, 0.14);
+  }
+}
+
+/* Right Stage: Real App Screenshots */
+.app-stage-col {
+  min-width: 0;
+}
+
+.app-screens-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(12px, 2vw, 18px);
+  align-items: center;
+}
+
+.app-phone-frame {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 0;
+  border-radius: 26px;
+  overflow: hidden;
+  background-color: #0e1410;
+  border: 1.5px solid rgba(255, 255, 255, 0.1);
+  opacity: 0.68;
+  transform: scale(0.97);
+  transition:
+    opacity 240ms var(--ease-out),
+    transform 240ms var(--ease-out),
+    border-color 240ms var(--ease-out);
+}
+
+.app-phone-frame.is-active {
+  opacity: 1;
+  transform: translateY(-6px) scale(1);
+  border-color: rgba(94, 240, 155, 0.55);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .app-phone-frame:not(.is-active):hover {
+    opacity: 0.9;
+    transform: translateY(-2px) scale(0.985);
+  }
+}
+
+/* Crop ONLY the 22:00 / battery phone status bar at top, keeping full Quark Mini App header clean */
+.app-phone-viewport {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 473 / 978;
+  overflow: hidden;
+  background-color: #0e1410;
+}
+
+.app-phone-img {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 104.7%;
+  max-width: none;
+  object-fit: cover;
+  object-position: center bottom;
+  display: block;
+  user-select: none;
+}
+
+/* Minimal Footer with Direct Telegram Links */
 .site-footer {
-  margin-top: clamp(28px, 4vw, 48px);
-  padding-block: 18px 36px;
+  margin-top: clamp(44px, 6vw, 72px);
+  padding-block: 20px 36px;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: 14px 24px;
 }
 
-.footer-copy,
-.footer-meta {
+.footer-copy {
   font-size: 0.875rem;
   color: var(--text-tertiary);
 }
 
-@media (max-width: 1024px) {
-  .folders-row {
-    justify-content: center;
-    gap: 18px;
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 18px;
+}
+
+.footer-tg-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  transition: color 180ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .footer-tg-link:hover {
+    color: var(--accent-bright);
   }
 }
 
-@media (max-width: 820px) {
-  .workspace-top {
+@media (max-width: 900px) {
+  .app-showcase-grid {
     grid-template-columns: 1fr;
-    gap: 20px;
+    gap: 28px;
+  }
+
+  .app-info-col {
+    max-width: 560px;
   }
 }
 
 @media (max-width: 640px) {
-  .folders-row {
-    flex-direction: column;
-    align-items: center;
-    gap: 24px;
-  }
-}
-
-@media (max-width: 520px) {
-  .workspace-link-row {
-    grid-template-columns: minmax(0, 1fr) auto;
-    margin-inline: 0;
-    padding: 10px 0;
+  .app-stage-col {
+    margin-inline: calc(var(--gutter) * -1);
   }
 
-  .workspace-link-note {
-    grid-column: 1 / 2;
-    font-size: 0.94rem;
+  .app-screens-row {
+    display: flex;
+    gap: 14px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+    padding-inline: var(--gutter);
+    padding-block: 10px 14px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
   }
 
-  .workspace-link-arrow {
-    grid-column: 2 / 3;
-    grid-row: 1 / 3;
+  .app-screens-row::-webkit-scrollbar {
+    display: none;
+  }
+
+  .app-phone-frame {
+    flex: 0 0 226px;
+    scroll-snap-align: center;
+    opacity: 0.85;
+    transform: none;
+    border-radius: 22px;
+  }
+
+  .app-phone-frame.is-active {
+    transform: translateY(-2px);
+  }
+
+  .app-actions-row {
+    width: auto;
+  }
+
+  .app-btn {
+    flex: 0 0 auto;
+    height: 42px;
+    padding: 0 16px;
+    font-size: 0.9rem;
   }
 }
