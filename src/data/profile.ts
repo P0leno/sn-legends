@@ -56,11 +56,11 @@ export const FEATURED_TRACK: TrackItem = {
   title: '8 миля',
   artist: 'madk1d, VILLIAN',
   sourceLabel: 'SoundCloud',
-  soundcloudUrl: 'https://soundcloud.com/search/sounds?q=madk1d%208%20%D0%BC%D0%B8%D0%BB%D1%8F',
-  audioSrc: '',
-  durationLabel: '02:44',
-  durationSeconds: 164,
-  cover: './assets/quark/quark-bot.jpg',
+  soundcloudUrl: 'https://soundcloud.com/madk1d9/8-milya',
+  audioSrc: './assets/music/8-milya.mp3',
+  durationLabel: '01:54',
+  durationSeconds: 114,
+  cover: './assets/music/8-milya-cover.jpg',
 };
 
 export const QUARK_NODES: QuarkNodeItem[] = [

@@ -33,6 +33,7 @@ const PLAYLIST_FILES: FolderFile[] = [
   {
     name: `${FEATURED_TRACK.artist} — ${FEATURED_TRACK.title}`,
     meta: `${FEATURED_TRACK.sourceLabel} · ${FEATURED_TRACK.durationLabel}`,
+    image: FEATURED_TRACK.cover,
     art: PINE_STREAK_ART,
     href: FEATURED_TRACK.soundcloudUrl,
   },
