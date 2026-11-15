@@ -81,7 +81,7 @@ export function QuarkWorkspace() {
         <footer className="site-footer">
           <div className="footer-brand">
             <span className="footer-quark-badge" aria-hidden="true">
-              <QuarkLogo size={16} />
+              <QuarkLogo size={18} />
             </span>
             <span className="footer-copy tabular-nums">
               © {CURRENT_YEAR} {PROFILE.name}
