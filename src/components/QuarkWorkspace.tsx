@@ -44,49 +44,39 @@ export function QuarkWorkspace() {
           </div>
         </div>
 
-        <div className="app-gallery-stage">
+        <motion.div
+          className="app-fan-stage"
+          initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 14 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.1 }}
+          transition={{ duration: 0.36, ease: [0.23, 1, 0.32, 1] }}
+        >
           <div className="app-stage-emblem" aria-hidden="true">
-            <QuarkLogo size={460} />
+            <QuarkLogo size={480} />
           </div>
 
-          <div className="app-gallery-grid">
-            {APP_SCREENS.map((screen, index) => {
-              const isCenter = screen.id === 'menu';
-              return (
-                <motion.figure
-                  key={screen.id}
-                  className={`app-screen-card ${isCenter ? 'is-featured' : ''}`}
-                  initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 16 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.12 }}
-                  transition={{
-                    duration: 0.38,
-                    delay: shouldReduceMotion ? 0 : index * 0.06,
-                    ease: [0.23, 1, 0.32, 1],
-                  }}
-                >
-                  <div className="app-phone-frame">
-                    <div className="app-phone-viewport">
-                      <img
-                        src={screen.src}
-                        alt={`QuarkApp — ${screen.title}`}
-                        className="app-phone-img"
-                        loading="eager"
-                        decoding="async"
-                        draggable={false}
-                      />
-                    </div>
+          {APP_SCREENS.map((screen, index) => {
+            const slotClass =
+              index === 0 ? 'is-fan-left' : index === 1 ? 'is-fan-center' : 'is-fan-right';
+
+            return (
+              <figure key={screen.id} className={`app-fan-card ${slotClass}`}>
+                <div className="app-phone-frame">
+                  <div className="app-phone-viewport">
+                    <img
+                      src={screen.src}
+                      alt={`QuarkApp — ${screen.title}`}
+                      className="app-phone-img"
+                      loading="eager"
+                      decoding="async"
+                      draggable={false}
+                    />
                   </div>
-
-                  <figcaption className="app-screen-caption">
-                    <span className="app-screen-name">{screen.title}</span>
-                    <span className="app-screen-desc">{screen.caption}</span>
-                  </figcaption>
-                </motion.figure>
-              );
-            })}
-          </div>
-        </div>
+                </div>
+              </figure>
+            );
+          })}
+        </motion.div>
 
         <footer className="site-footer">
           <div className="footer-brand">

@@ -9,7 +9,7 @@
   align-items: flex-end;
   justify-content: space-between;
   gap: 20px 32px;
-  margin-bottom: clamp(32px, 4.5vw, 52px);
+  margin-bottom: clamp(28px, 4vw, 44px);
 }
 
 .app-heading-group {
@@ -81,62 +81,84 @@
   }
 }
 
-/* Crisp Triptych Stage with Embossed Signature Quark Crest */
-.app-gallery-stage {
+/* Fanned 3-Screen Showcase Stage (Static Clear Display, Zero Switcher UI) */
+.app-fan-stage {
   position: relative;
-  padding-top: 10px;
+  width: 100%;
+  height: clamp(460px, 46vw, 590px);
+  perspective: 1800px;
+  contain: layout style;
 }
 
 .app-stage-emblem {
   position: absolute;
-  top: 44%;
+  top: 46%;
   left: 50%;
   transform: translate3d(-50%, -50%, 0) rotate(-6deg);
   color: var(--accent-bright);
-  opacity: 0.065;
+  opacity: 0.07;
   pointer-events: none;
   user-select: none;
   z-index: 0;
 }
 
-.app-gallery-grid {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(18px, 3vw, 34px);
-  align-items: start;
-}
-
-.app-screen-card {
+.app-fan-card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: clamp(216px, 23.5vw, 266px);
   margin: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 14px;
+  transform-origin: center 72%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transition: transform 280ms var(--ease-out), opacity 240ms var(--ease-out);
 }
 
-@media (min-width: 761px) {
-  .app-screen-card.is-featured {
-    transform: translate3d(0, -14px, 0);
+.app-fan-card.is-fan-center {
+  z-index: 4;
+  opacity: 1;
+  transform: translate3d(-50%, -50%, 28px) scale(1);
+}
+
+.app-fan-card.is-fan-left {
+  z-index: 2;
+  opacity: 0.92;
+  transform: translate3d(-120%, -46%, 0) scale(0.91) rotateZ(-5.5deg) rotateY(8deg);
+}
+
+.app-fan-card.is-fan-right {
+  z-index: 2;
+  opacity: 0.92;
+  transform: translate3d(20%, -46%, 0) scale(0.91) rotateZ(5.5deg) rotateY(-8deg);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .app-fan-card.is-fan-left:hover {
+    opacity: 1;
+    transform: translate3d(-123%, -48%, 12px) scale(0.94) rotateZ(-4deg) rotateY(5deg);
+  }
+
+  .app-fan-card.is-fan-right:hover {
+    opacity: 1;
+    transform: translate3d(23%, -48%, 12px) scale(0.94) rotateZ(4deg) rotateY(-5deg);
   }
 }
 
 .app-phone-frame {
   position: relative;
   width: 100%;
-  max-width: 288px;
   border-radius: 26px;
   overflow: hidden;
   background-color: #0e1410;
-  border: 1.5px solid rgba(255, 255, 255, 0.14);
+  border: 1.5px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 26px 56px -14px rgba(0, 0, 0, 0.85);
 }
 
-.app-screen-card.is-featured .app-phone-frame {
-  border-color: rgba(94, 240, 155, 0.42);
+.app-fan-card.is-fan-center .app-phone-frame {
+  border-color: rgba(94, 240, 155, 0.56);
 }
 
-/* Crop ONLY the 22:00 / battery phone status bar at top, preserving 100% HD clarity */
+/* Crop ONLY the 22:00 / battery phone status bar at top, keeping crisp 946x2048 clarity */
 .app-phone-viewport {
   position: relative;
   width: 100%;
@@ -158,36 +180,9 @@
   user-select: none;
 }
 
-.app-screen-caption {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 4px;
-  max-width: 28ch;
-}
-
-.app-screen-name {
-  font-family: var(--font-display);
-  font-size: 1rem;
-  font-weight: 600;
-  line-height: 1.25;
-  color: var(--text-primary);
-}
-
-.app-screen-card.is-featured .app-screen-name {
-  color: var(--accent-bright);
-}
-
-.app-screen-desc {
-  font-size: 0.875rem;
-  line-height: 1.42;
-  color: var(--text-secondary);
-}
-
 /* Architectural Signature Footer */
 .site-footer {
-  margin-top: clamp(52px, 7vw, 84px);
+  margin-top: clamp(44px, 6vw, 72px);
   padding-block: 24px calc(36px + env(safe-area-inset-bottom, 0px));
   display: flex;
   flex-wrap: wrap;
@@ -241,37 +236,44 @@
   }
 }
 
-/* Tablet & Mobile Responsive Clarity (No horizontal clipping) */
+/* Tablet & Mobile Fanned Layout (Cleanly framed within viewport width) */
 @media (max-width: 760px) {
-  .app-gallery-grid {
-    grid-template-columns: 1fr;
-    gap: 28px;
-    justify-items: center;
+  .app-fan-stage {
+    height: clamp(360px, 98vw, 460px);
+    perspective: 1400px;
   }
 
-  .app-screen-card {
-    width: 100%;
-    max-width: 292px;
+  .app-fan-card {
+    width: clamp(150px, 43vw, 206px);
   }
 
-  .app-screen-card.is-featured {
-    order: -1;
+  .app-fan-card.is-fan-center {
+    transform: translate3d(-50%, -50%, 18px) scale(1);
+  }
+
+  .app-fan-card.is-fan-left {
+    opacity: 0.92;
+    transform: translate3d(-108%, -46%, 0) scale(0.89) rotateZ(-6deg) rotateY(7deg);
+  }
+
+  .app-fan-card.is-fan-right {
+    opacity: 0.92;
+    transform: translate3d(8%, -46%, 0) scale(0.89) rotateZ(6deg) rotateY(-7deg);
   }
 
   .app-phone-frame {
-    max-width: 276px;
-    border-radius: 24px;
+    border-radius: 20px;
   }
 
   .app-stage-emblem {
-    transform: translate3d(-50%, -50%, 0) scale(0.8);
+    transform: translate3d(-50%, -50%, 0) scale(0.76);
   }
 }
 
 @media (max-width: 520px) {
   .app-header-row {
     gap: 16px;
-    margin-bottom: 28px;
+    margin-bottom: 18px;
   }
 
   .app-actions-row {
@@ -281,13 +283,13 @@
   .app-btn {
     flex: 1 1 auto;
     min-width: 0;
-    height: 46px;
+    height: 44px;
     padding: 0 16px;
     font-size: 0.9rem;
   }
 
   .site-footer {
-    margin-top: 44px;
+    margin-top: 28px;
     flex-direction: column;
     align-items: flex-start;
     gap: 14px;
