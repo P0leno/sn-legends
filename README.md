@@ -1,32 +1,37 @@
-# React + TypeScript + Vite
+# 🌲 сн легендс · QUARK (`sn-legends`)
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Официальный персональный сайт-витрина создателя экосистемы **QUARK** в Telegram (`QuarkApp`, `@quarkgiftbot`, `@quarkgift`). Выполнен в фирменной тёмно-лесной эстетике с 3D-колодой экранов, плавными composite-only 60fps анимациями и интерактивным превью Mini App.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## ✨ Особенности
 
-## React Compiler
+- **Интерактивная витрина QUARK**: демонстрация ключевых механик и интерфейсов `QuarkApp` в 3D-колоде устройств.
+- **Производительность 60fps**: все CSS и Motion-анимации оптимизированы под композитный рендеринг (`transform` / `opacity`).
+- **Готовый деплой**: мультистейдж `Dockerfile` + `nginx.conf` для VPS/контейнеров и конфигурация `wrangler.toml` для Cloudflare Pages / Workers.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the Oxlint configuration
+## 🛠 Технологический стек
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+- **Frontend**: React 19, TypeScript, Vite, Motion (`framer-motion`)
+- **Линтинг**: Oxlint
+- **Инфраструктура**: Docker, Docker Compose, Nginx, Cloudflare Wrangler
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+---
+
+## 🚀 Запуск и сборка
+
+```bash
+# Установка зависимостей
+npm install
+
+# Локальный сервер разработки
+npm run dev
+
+# Сборка для продакшена
+npm run build
+
+# Запуск в Docker
+docker compose up --build -d
 ```
-
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
